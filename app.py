@@ -20,24 +20,28 @@ def split_part_number(part_number):
 
 def front_head_calc(bore, mounting, ports, cushions, rod_style):
     if rod_style in ('6', '7', '8'):
-        block_code = {'X0':'205','F1':'205','F2':'205','P1':'205','P2':'205','P3':'205','S1':'205',
-                      'P4':'205','T6':'225','T7':'205','T8':'205','X1':'205','X2':'205','X3':'205',
-                      'S2':'235','S4':'215','E3':'295','E4':'295','SN':'265','SE':'275', 'SF':'285'}
+        block_code = {'X0':'205','F1':'205','F2':'205','P1':'205','P2':'205','P3':'205',
+                      'S1':'205','P4':'205','T6':'225','T7':'205','T8':'205','X1':'205',
+                      'X2':'205','X3':'205','S2':'235','S4':'215','E3':'295','E4':'295',
+                      'SN':'265','SE':'275', 'SF':'285'}
+                      
     else:
-        block_code = {'X0':'200','F1':'200','F2':'200','P1':'200','P2':'200','P3':'200','S1':'200',
-                      'P4':'200','T6':'220','T7':'200','T8':'200','X1':'200','X2':'200','X3':'200',
-                      'S2':'230','S4':'210','E3':'290','E4':'290','SN':'260','SE':'270', 'SF':'280'}
+        block_code = {'X0':'200','F1':'200','F2':'200','P1':'200','P2':'200','P3':'200',
+                      'S1':'200','P4':'200','T6':'220','T7':'200','T8':'200','X1':'200',
+                      'X2':'200','X3':'200','S2':'230','S4':'210','E3':'290','E4':'290',
+                      'SN':'260','SE':'270','SF':'280'}
 
     front_cushion_code = {'B':'F','F':'F','C':'G','G':'G','D':'H','H':'H','E':'J','J':'J'}
 
-    front_head = (bore_code.get(bore, 'UNKNOWN') + '-' + block_code.get(mounting, 'ERROR') + '-' 
+    front_head = (bore_code.get(bore, 'UNKNOWN') + '-' + block_code.get(mounting, 'ERROR') + '-'
                   + ports + front_cushion_code.get(cushions, 'A'))
     return front_head
 
 def rear_cover_calc(bore, mounting, ports, cushions, options, front_head):
-    cover_code = {'X0':'100','F1':'100','F2':'100','P1':'150','P2':'100','P3':'140','S1':'205',
-                  'P4':'100','T6':'100','T7':'120','T8':'100','X1':'100','X2':'100','X3':'100',
-                  'S2':'130','S4':'110','E3':'190','E4':'190','SN':'160','SE':'170','SF':'170'}
+    cover_code = {'X0':'100','F1':'100','F2':'100','P1':'150','P2':'100','P3':'140',
+                  'S1':'205','P4':'100','T6':'100','T7':'120','T8':'100','X1':'100',
+                  'X2':'100','X3':'100','S2':'130','S4':'110','E3':'190','E4':'190',
+                  'SN':'160','SE':'170','SF':'170'}             
 
     rear_cushion_code = {'B':'K','K':'K','C':'L','L':'L','D':'M','M':'M','E':'N','N':'N'}
 
@@ -103,9 +107,9 @@ def index():
             front_head = front_head_calc(bore, mounting, ports, cushions, rod_style)
             rear_cover = rear_cover_calc(bore, mounting, ports, cushions, options, front_head)
             rod = piston_rod_calc(bore,rod_style,stroke,fractional_stroke,extension)
-            return render_template('result.html', bore=bore, mounting=mounting, 
+            return render_template('result.html', bore=bore, mounting=mounting,
                                    stroke=stroke, fractional_stroke=fractional_stroke,
-                                   rod_style=rod_style, ports=ports, cushions=cushions, 
+                                   rod_style=rod_style, ports=ports, cushions=cushions,
                                    options=options,magnet=magnet,extension=extension, front_head=front_head,
                                    rear_cover=rear_cover, rod=rod)
         except ValueError as e:
