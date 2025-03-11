@@ -30,7 +30,8 @@ def front_head_calc(bore, mounting, ports, cushions, rod_style):
 
     front_cushion_code = {'B':'F','F':'F','C':'G','G':'G','D':'H','H':'H','E':'J','J':'J'}
 
-    front_head = bore_code.get(bore, 'UNKNOWN') + '-' + block_code.get(mounting, 'ERROR') + '-' + ports + front_cushion_code.get(cushions, 'A')
+    front_head = (bore_code.get(bore, 'UNKNOWN') + '-' + block_code.get(mounting, 'ERROR') + '-' 
+                  + ports + front_cushion_code.get(cushions, 'A'))
     return front_head
 
 def rear_cover_calc(bore, mounting, ports, cushions, options, front_head):
@@ -41,7 +42,8 @@ def rear_cover_calc(bore, mounting, ports, cushions, options, front_head):
     rear_cushion_code = {'B':'K','K':'K','C':'L','L':'L','D':'M','M':'M','E':'N','N':'N'}
 
     if options != 'DR':
-        rear_cover = bore_code.get(bore, 'UNKNOWN') + '-' + cover_code.get(mounting, 'ERROR') + '-' + ports + rear_cushion_code.get(cushions, 'A')
+        rear_cover = (bore_code.get(bore, 'UNKNOWN') + '-' + cover_code.get(mounting, 'ERROR') + '-'
+                      + ports + rear_cushion_code.get(cushions, 'A'))
     else:
         rear_cover = front_head
 
@@ -96,14 +98,16 @@ def index():
         try:
             part_number = request.form['part_number'].upper()
             part_number = part_number.replace('XO','X0')
-            bore, mounting, stroke, fractional_stroke, rod_style, ports, cushions, options, magnet, extension = split_part_number(part_number)
+            (bore, mounting, stroke, fractional_stroke, rod_style,
+             ports, cushions, options, magnet, extension) = split_part_number(part_number)
             front_head = front_head_calc(bore, mounting, ports, cushions, rod_style)
             rear_cover = rear_cover_calc(bore, mounting, ports, cushions, options, front_head)
             rod = piston_rod_calc(bore,rod_style,stroke,fractional_stroke,extension)
-            return render_template('result.html', bore=bore, mounting=mounting, stroke=stroke, fractional_stroke=fractional_stroke,
-                                   rod_style=rod_style, ports=ports, cushions=cushions, options=options,
-                                   magnet=magnet,extension=extension, front_head=front_head, rear_cover=rear_cover, rod=rod)
-
+            return render_template('result.html', bore=bore, mounting=mounting, 
+                                   stroke=stroke, fractional_stroke=fractional_stroke,
+                                   rod_style=rod_style, ports=ports, cushions=cushions, 
+                                   options=options,magnet=magnet,extension=extension, front_head=front_head,
+                                   rear_cover=rear_cover, rod=rod)
         except ValueError as e:
             return render_template('index.html', error=str(e))
 
