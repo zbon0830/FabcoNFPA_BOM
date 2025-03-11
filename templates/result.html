@@ -1,18 +1,29 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
-    <title>Part Number Details</title>
+    <title>Part Number Analysis</title>
 </head>
 <body>
-    <h1>Part Number Details</h1>
-    <p>Bore Size: {{ bore }}</p>
-    <p>Mounting Style: {{ mounting }}</p>
-    <p>Stroke: {{ stroke }}</p>
-    <p>Rod Style: {{ rod_style }}</p>
-    <p>Port and Cushion: {{ port_cush }}</p>
-    <p>Option Code: {{ options }}</p>
-    <p>Magnet: {{ magnet }}</p>
-    <p>Option Extension: {{ option_extension }}</p>
-    <a href="/">Go Back</a>
+    <h1>Part Number Breakdown</h1>
+    <p><strong>PART NUMBER:</strong> {{ part_number }}</p>
+    <p><strong>Bore Size:</strong> {{ bore }}</p>
+    <p><strong>Mounting Style:</strong> {{ mounting }}</p>
+    <p><strong>Stroke:</strong> {{ stroke }}</p>
+    <p><strong>Fractional Stroke:</strong> {{ fractional_stroke }}</p>
+    <p><strong>Rod Style:</strong> {{ rod_style }}</p>
+    <p><strong>Ports:</strong> {{ ports }}</p>
+    <p><strong>Cushions:</strong> {{ cushions }}</p>
+    <p><strong>Option Code:</strong> {{ options }}</p>
+    <p><strong>Magnet:</strong> {{ magnet }}</p>
+
+    {% if extension %}
+        <p><strong>Extension:</strong> {{ extension }}</p>
+    {% endif %}
+
+    <h2>BOM (Bill of Materials)</h2>
+    <p><strong>Front Head:</strong> {{ front_head }}</p>
+    <p><strong>Rear Cover:</strong> {{ rear_cover }}</p>
+    <p><strong>Piston Rod:</strong> {{ rod }}</p>
+    <a href="/">Analyze Another Part</a>
 </body>
 </html>
