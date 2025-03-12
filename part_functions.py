@@ -14,13 +14,15 @@ def split_part_number(part_number):
     return match.groups()
 
 def front_head_calc(bore, mounting, ports, cushions, rod_style):
-    port_position = {'B': '1', 'H': '2', 'N': '3', 'T': '4',
-                     'C': '1', 'I': '2', 'O': '3', 'U': '4',
-                     'D': '1', 'J': '2', 'P': '3', 'V': '4',
-                     'E': '1', 'K': '2', 'Q': '3', 'W': '4',
-                     'F': '1', 'L': '2', 'R': '3', 'X': '4'}
+    port_code={}
+    port_position = {'B':'1','H':'2','N':'3','T':'4',
+                     'C': '1','I':'2','O':'3','U':'4',
+                     'D': '1','J':'2','P':'3','V':'4',
+                     'E': '1','K':'2','Q':'3','W':'4',
+                     'F': '1','L':'2','R':'3','X':'4'}
     front_cushion_code = {'A':'A','B':'F','F':'F','C':'G','G':'G','D':'H','H':'H','E':'J','J':'J'}
     front_cushion_position = {'B':'1','F':'1','C':'2','G':'2','D':'3','H':'3','E':'4','J':'4'}
+    front_cushion_result = front_cushion_code[cushions]  # initialize standard cushion result
     if rod_style in ('6', '7', '8'):
         block_code = {'X0':'205','F1':'205','F2':'205','P1':'205','P2':'205','P3':'205',
                       'S1':'205','P4':'205','T6':'225','T7':'205','T8':'205','X1':'205',
@@ -35,10 +37,39 @@ def front_head_calc(bore, mounting, ports, cushions, rod_style):
 
     if cushions != 'A': #yes cushions
         if block_code[mounting] in ('200','205'):
-            if front_cushion_position[cushions] in ('2','4'): #if cushions are in position 2 or 4, use pos 2
-                cushions = 'G'
-            else:
-                cushions = 'F' #if position 1 or 3, use pos 1
+            if int(port_position[ports]) == int(front_cushion_position[cushions])+1:
+                port_code = {'B':'B','H':'B','N':'B','T':'B', #port will be at position 1 in p/n
+                             'C':'C','I':'C','O':'C','U':'C',
+                             'D':'D','J':'D','P':'D','V':'D',
+                             'E':'E','K':'E','Q':'E','W':'E',
+                             'F':'F','L':'F','R':'F','X':'F'}
+                front_cushion_result = 'J' #cushion will be position 4
+            elif int(front_cushion_position[cushions]) == int(port_position[ports])+1:
+                port_code = {'B':'B','H':'B','N':'B','T':'B', #port will be at position 1 in p/n
+                             'C':'C','I':'C','O':'C','U':'C',
+                             'D':'D','J':'D','P':'D','V':'D',
+                             'E':'E','K':'E','Q':'E','W':'E',
+                             'F':'F','L':'F','R':'F','X':'F'}
+                front_cushion_result = 'G'  #cushion will be position 2 in p/n
+            elif abs(int(front_cushion_position[cushions])-int(port_position[ports])) == 2:
+                port_code = {'B':'B','H':'B','N':'B','T':'B', #port will be at position 1 in p/n
+                             'C':'C','I':'C','O':'C','U':'C',
+                             'D':'D','J':'D','P':'D','V':'D',
+                             'E':'E','K':'E','Q':'E','W':'E',
+                             'F':'F','L':'F','R':'F','X':'F'}
+                front_cushion_result = 'H' #cushion will be position 3 in p/n
+            elif int(front_cushion_position[cushions]) == int(port_position[ports]):
+                port_code = {'B':'B','H':'B','N':'B','T':'B', #port will be at position 1 in p/n
+                             'C':'C','I':'C','O':'C','U':'C',
+                             'D':'D','J':'D','P':'D','V':'D',
+                             'E':'E','K':'E','Q':'E','W':'E',
+                             'F':'F','L':'F','R':'F','X':'F'}
+        else:
+            port_code = {'B':'B','H':'H','N':'N','T':'T',  #cushion and ports stay respective value
+                         'C':'C','I':'I','O':'O','U':'U',
+                         'D':'D','J':'J','P':'P','V':'V',
+                         'E':'E','K':'K','Q':'Q','W':'W',
+                         'F':'F','L':'L','R':'R','X':'X'}
     else: #no cushions
         if block_code[mounting] in ('200','205'):  # for normal 200 blockhead
             port_code = {'B':'B','H':'B','N':'B','T':'B',
@@ -53,7 +84,7 @@ def front_head_calc(bore, mounting, ports, cushions, rod_style):
                              'E':'E','K':'K','Q':'Q','W':'W',
                              'F':'F','L':'L','R':'R','X':'X'}
     front_head = (bore_code.get(bore, 'UNKNOWN') + '-' + block_code.get(mounting, 'ERROR') + '-'
-                  + port_code[ports] + front_cushion_code[cushions])
+                  + port_code[ports] + front_cushion_result)
     return front_head
 
 def rear_cover_calc(bore, mounting, ports, cushions, options, front_head):
