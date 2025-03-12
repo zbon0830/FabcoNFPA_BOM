@@ -149,30 +149,30 @@ def piston_rod_calc(bore,rod_style,stroke,fractional_stroke,extension,options):
     if bore in ('15','20','25'):
         if rod_style in ('1','2'):
             rod_adder = 3.375
-        elif rod_style == 3:
-            rod_adder = 3.375
+        elif rod_style == '3':
+            rod_adder = 2.625
         elif rod_style in ('6','7'):
-            rod_adder = 3.375
-        elif rod_style == 8:
-            rod_adder = 3.375
+            rod_adder = 4.125
+        elif rod_style == '8':
+            rod_adder = 3.000
     elif bore in ('32','40','50'):
         if rod_style in ('1', '2'):
-            rod_adder = 3.375
-        elif rod_style == 3:
-            rod_adder = 3.375
+            rod_adder = 4.375
+        elif rod_style == '3':
+            rod_adder = 3.250
         elif rod_style in ('6', '7'):
-            rod_adder = 3.375
-        elif rod_style == 8:
-            rod_adder = 3.375
+            rod_adder = 5.125
+        elif rod_style == '8':
+            rod_adder = 3.500
     elif bore in ('60','80'):
         if rod_style in ('1', '2'):
-            rod_adder = 3.375
-        elif rod_style == 3:
-            rod_adder = 3.375
+            rod_adder = 5.375
+        elif rod_style == '3':
+            rod_adder = 3.750
         elif rod_style in ('6', '7'):
-            rod_adder = 3.375
-        elif rod_style == 8:
-            rod_adder = 3.375
+            rod_adder = 6.000
+        elif rod_style == '8':
+            rod_adder = 4.000
     rod_length = rod_adder + int(stroke) + fractional_stroke_value[fractional_stroke] + total_extension
     rod = f"{rod_prefix}{rod_code[rod_style]}{round(rod_adder+int(stroke)+total_extension, 3)}"
     return rod
