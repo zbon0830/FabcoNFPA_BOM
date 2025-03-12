@@ -24,6 +24,9 @@
     <p><strong>Front Head:</strong> {{ front_head }}</p>
     <p><strong>Rear Cover:</strong> {{ rear_cover }}</p>
     <p><strong>Piston Rod:</strong> {{ rod }}</p>
+    {% if rod_2 %}
+        <p><strong>Piston Rod:</strong> {{ rod_2 }}</p>
+    {% endif %}
     <a href="/">Analyze Another Part</a>
 </body>
 </html>
