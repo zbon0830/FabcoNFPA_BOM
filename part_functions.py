@@ -40,20 +40,13 @@ def front_head_calc(bore, mounting, ports, cushions, rod_style):
             else:
                 cushions = 'F' #if position 1 or 3, use pos 1
     else: #no cushions
-        if block_code[mounting] in ('200','205'):
+        if block_code[mounting] in ('200','205'):  # for normal 200 blockhead
             port_code = {'B':'B','H':'B','N':'B','T':'B',
                          'C':'C','I':'C','O':'C','U':'C',
                          'D':'D','J':'D','P':'D','V':'D',
                          'E':'E','K':'E','Q':'E','W':'E',
                          'F':'F','L':'F','R':'F','X':'F'}
-        else:
-            if port_position in ('2','4'):
-                port_code = {'H':'H','T':'H',
-                            'I':'I','U':'I',
-                            'J':'J','V':'J',
-                            'K':'K','W':'K',
-                            'L':'L','X':'L'}
-            else:
+        else: # for block heads with immutable port locations (not 200 or 205)
                 port_code = {'B':'B','H':'H','N':'N','T':'T',
                              'C':'C','I':'I','O':'O','U':'U',
                              'D':'D','J':'J','P':'P','V':'V',
@@ -121,3 +114,14 @@ def piston_rod_calc(bore,rod_style,stroke,fractional_stroke,extension):
     rod_length = rod_adder + int(stroke) + fractional_stroke_value[fractional_stroke] + total_extension
     rod = f"{rod_prefix}{rod_code[rod_style]}{round(rod_adder+int(stroke)+total_extension, 3)}"
     return rod
+
+
+
+
+#TEMP: else:
+    #if port_position in ('2','4'):
+        #port_code = {'H':'H','T':'H',
+                    #'I':'I','U':'I',
+                    #'J':'J','V':'J',
+                   # 'K':'K','W':'K',
+                   # 'L':'L','X':'L'}
