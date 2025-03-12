@@ -1,4 +1,5 @@
-import re
+import re, string
+
 bore_code = {'15':'N15','20':'N20','25':'N25','32':'N32',
                  '40':'N40','50':'N50','60':'N60','80':'N80'}
 fractional_stroke_value = {'A': 0,'B':.0625,'C':.125,'D':.1875,'E':.250,'F':.3125,'G':.375,'H':.4375,
@@ -8,7 +9,8 @@ port_position = {'B':'1','H':'2','N':'3','T':'4',
                  'D':'1','J':'2','P':'3','V':'4',
                  'E':'1','K':'2','Q':'3','W':'4',
                  'F':'1','L':'2','R':'3','X':'4'}
-
+cushion_position = {'B':'1','K':'1','C':'2','L':'2','D':'3','M':'3','E': '4','N':'4',
+                    'F':'1','G':'2','H':'3','J':'4'}
 def split_part_number(part_number):
     pattern = r"^(\d{2})([A-Z0-9]{2})-?(\d{2})([A-Z])(\d)([A-Z])([A-Z])-?([A-Z]{2})([A-Z])(?:-?([A-Z]{2}\d{2}[A-Z]))?$"
     match = re.match(pattern, part_number)
@@ -68,7 +70,7 @@ def front_head_calc(bore, mounting, ports, cushions, rod_style):
     return front_head
 
 
-def rear_cover_calc(bore, mounting, ports, cushions, options, front_head):
+def rear_cover_calc(bore, mounting, ports, cushions, options, rod_style):
     port_code = {'B':'B','H':'B','N':'B','T':'B',  # port will be at position 1 in p/n
                  'C':'C','I':'C','O':'C','U':'C',
                  'D':'D','J':'D','P':'D','V':'D',
@@ -82,7 +84,7 @@ def rear_cover_calc(bore, mounting, ports, cushions, options, front_head):
     rear_cushion_position = {'B':'1','K':'1','C':'2','L':'2','D':'3','M':'3','E': '4','N':'4'}
     rear_cushion_result = rear_cushion_code[cushions]
     if cushions != 'A':  # yes cushions
-        if cover_code[mounting] in ('200', '205'):
+        if cover_code[mounting] in ('100', '105'):
             if int(port_position[ports]) == int(rear_cushion_position[cushions]) + 1:
                 rear_cushion_result = 'N'  # cushion will be position 4
 
@@ -114,11 +116,25 @@ def rear_cover_calc(bore, mounting, ports, cushions, options, front_head):
                          'D': 'D', 'J': 'J', 'P': 'P', 'V': 'V',
                          'E': 'E', 'K': 'K', 'Q': 'Q', 'W': 'W',
                          'F': 'F', 'L': 'L', 'R': 'R', 'X': 'X'}
-    rear_cover = (bore_code.get(bore, 'UNKNOWN') + '-' + cover_code.get(mounting, 'ERROR') + '-'
-                  + port_code[ports] + rear_cushion_result)
+    if options != 'DR':
+        rear_cover = (bore_code.get(bore, 'UNKNOWN') + '-' + cover_code.get(mounting, 'ERROR') + '-'
+                     + port_code[ports] + rear_cushion_result)
+    else:
+        if rod_style in ('6', '7', '8'):
+            block_code = {'X0': '205', 'F1': '205', 'F2': '205', 'P1': '205', 'P2': '205', 'P3': '205',
+                          'S1': '205', 'P4': '205', 'T6': '225', 'T7': '205', 'T8': '205', 'X1': '205',
+                          'X2': '205', 'X3': '205', 'S2': '235', 'S4': '215', 'E3': '295', 'E4': '295',
+                          'SN': '265', 'SE': '275', 'SF': '285'}
+        else:
+            block_code = {'X0': '200', 'F1': '200', 'F2': '200', 'P1': '200', 'P2': '200', 'P3': '200',
+                          'S1': '200', 'P4': '200', 'T6': '220', 'T7': '200', 'T8': '200', 'X1': '200',
+                          'X2': '200', 'X3': '200', 'S2': '230', 'S4': '210', 'E3': '290', 'E4': '290',
+                          'SN': '260', 'SE': '270', 'SF': '280'}
+        rear_cover = (bore_code.get(bore, 'UNKNOWN') + '-' + block_code.get(mounting, 'ERROR') + '-'
+                      + port_code[ports] + rear_cushion_result)
     return rear_cover
 
-def piston_rod_calc(bore,rod_style,stroke,fractional_stroke,extension):
+def piston_rod_calc(bore,rod_style,stroke,fractional_stroke,extension,options):
     if bore in ('15','20','25'):
         rod_prefix = 'N15'
     else:
