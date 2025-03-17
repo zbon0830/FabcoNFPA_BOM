@@ -1,0 +1,154 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Part Number Analysis</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f4;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            min-height: 100vh;
+            margin: 0;
+        }
+        .wrapper {
+            display: flex;
+            gap: 20px;
+            max-width: 1000px;
+        }
+        .container {
+            background: white;
+            padding: 20px 40px;
+            border-radius: 10px;
+            box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.2);
+            width: 50%;
+            text-align: left;
+        }
+        h1, h2 { color: #333; text-align: center; }
+        p { font-size: 16px; margin: 8px 0; color: #555; }
+        strong { color: #222; }
+        .divider { border-bottom: 2px solid #ddd; margin: 15px 0; }
+        .back-button {
+            display: block;
+            text-align: center;
+            background: #007BFF;
+            color: white;
+            padding: 10px;
+            margin-top: 15px;
+            text-decoration: none;
+            border-radius: 5px;
+            font-size: 16px;
+        }
+        .back-button:hover { background: #0056b3; }
+        /* Copy BOM Box */
+        .copy-section {
+            background: white;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.2);
+            width: 40%;
+            text-align: center;
+        }
+        .copy-box {
+            width: 90%;
+            height: 300px;
+            padding: 10px;
+            font-size: 16px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            background: #f9f9f9;
+            resize: none;
+        }
+        .copy-button {
+            margin-top: 5px;
+            padding: 8px 12px;
+            background: #28a745;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+        .copy-button:hover { background: #218838; }
+    </style>
+</head>
+<body>
+    <div class="wrapper">
+        <!-- Part Breakdown Section (Left) -->
+        <div class="container">
+            <h1>Part Number Breakdown</h1>
+            <p><strong>PART NUMBER:</strong> {{ part_number }}</p>
+            <div class="divider"></div>
+            <p><strong>Bore Size:</strong> {{ bore }}</p>
+            <p><strong>Mounting Style:</strong> {{ mounting }}</p>
+            <p><strong>Stroke:</strong> {{ stroke }}</p>
+            <p><strong>Fractional Stroke:</strong> {{ fractional_stroke }}</p>
+            <p><strong>Rod Style:</strong> {{ rod_style }}</p>
+            <p><strong>Ports:</strong> {{ ports }}</p>
+            <p><strong>Cushions:</strong> {{ cushions }}</p>
+            <p><strong>Option Code:</strong> {{ options }}</p>
+            <p><strong>Magnet:</strong> {{ magnet }}</p>
+            {% if extension %}
+              <p><strong>Extension:</strong> {{ extension }}</p>
+            {% endif %}
+
+
+            <h2>BOM (Bill of Materials)</h2>
+            <div class="divider"></div>
+            <p><strong>Front Head:</strong> {{ front_head }}</p>
+            <p><strong>Rear Cover:</strong> {{ rear_cover }}</p>
+            <p><strong>Piston Rod:</strong> {{ rod }}</p>
+            {% if rod_2 %}<p><strong>Piston Rod 2:</strong> {{ rod_2 }}</p>{% endif %}
+            <p><strong>Piston Head:</strong> {{ piston_head }}</p>
+            <p><strong>Rod Bushing:</strong> {{ rod_bushing }}</p>
+            <p><strong>Cylinder Tube:</strong> {{ cylinder_tube }}</p>
+            <p><strong>Tie Rod:</strong> {{ tie_rod }}</p>
+            {% if tie_rod_2 %}<p><strong>Tie Rod 2:</strong> {{ tie_rod_2 }}</p>{% endif %}
+            <p><strong>Rod Bearing:</strong> {{ rod_bearing }}</p>
+            <p><strong>Rod Seal:</strong> {{ rod_seal }}</p>
+            <p><strong>Piston Seal:</strong> {{ piston_seal }}</p>
+            <p><strong>Bushing Seal:</strong> {{ bushing_seal }}</p>
+            <p><strong>Tube Gasket:</strong> {{ tube_gasket }}</p>
+            <p><strong>Rod Wiper:</strong> {{ rod_wiper }}</p>
+            <p><strong>Wearband:</strong> {{ wearband }}</p>
+            <p><strong>Magnet:</strong> {{ magnet_number }}</p>
+            <a href="/" class="back-button">Analyze Another Part</a>
+        </div>
+        <!-- Copy BOM Section (Right) -->
+        <div class="copy-section">
+            <h2>Copy BOM Parts</h2>
+            <textarea id="bomCopy" class="copy-box" readonly>
+{{ front_head }}
+{{ rear_cover }}
+{{ rod }}{% if rod_2 %}
+{{ rod_2 }}{% endif %}
+{{ piston_head }}
+{{ rod_bushing }}
+{{ cylinder_tube }}
+{{ tie_rod }}{% if tie_rod_2 %}
+{{ tie_rod_2 }}{% endif %}
+{{ rod_bearing }}
+{{ rod_seal }}
+{{ piston_seal }}
+{{ bushing_seal }}
+{{ rod_wiper }}
+{{ tube_gasket }}
+{{ wearband }}{% if magnet_number %}
+{{ magnet_number}}{% endif %}
+
+            </textarea>
+            <button class="copy-button" onclick="copyBOM()">Copy to Clipboard</button>
+        </div>
+    </div>
+    <script>
+        function copyBOM() {
+            var copyText = document.getElementById("bomCopy");
+            copyText.select();
+            document.execCommand("copy");
+            alert("BOM copied to clipboard!");
+        }
+    </script>
+</body>
+</html>
