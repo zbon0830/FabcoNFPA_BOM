@@ -34,7 +34,7 @@ cushion_position = {'B':'1','K':'1','C':'2','L':'2','D':'3','M':'3','E':'4','N':
 
 #lists of all codes with respective seals / features
 viton_codes = ["PD","PN","PU","PV","PX","PZ","LZ","MJ","LY","LO","LI","IH","IF","IE","IB","IA",
-                "HX","HW","HR","HT","HS","HO","HP","HK","HG","HH","HC","HD","DV","DP","DJ","DH","DC",
+                "HX","HW","HR","HT","HS","HO","HP","HK","HG","HH","HC","HD","DV","DP","DJ","DH","DC","DQ",
                 "BV","BQ","BU","BG","BJ","BD","AH","SQ","SO","SV","SY","VB","VC","VD","VE","VF","VG",
                 "VH","VI","VJ","VK","VL","VM","VN","VO","VP","VQ","VR","VS","VT","VU","WE","WG","WH",
                 "WN","WT","WU","WV","WW","WY"]
@@ -60,12 +60,9 @@ metallic_scraper_codes = ["AH", "BD", "BE", "BG", "BI", "BJ", "BO", "BU", "BW", 
                          "WS","WT","WU","WV","WW","WX","WY","WZ"]
 
 low_breakaway_codes = ["LB","BL","HA","HB","HC","HD","HE","HF","HG","HH","HI","HJ","HK","HL","HM","HN",
-                       "HO", "HP",
-                       "HQ","HR","HS","HT","HU","HV","HW","HX","HY","HZ","IA","IB","IC","ID","IE","IF",
-                       "IG","IH",
-                       "LA","LC","LD","LE","LF","LG","LH","LI","LJ","LK","LL","LM","LN","LO","LQ","LR",
-                       "LS","LU",
-                       "LV","LW","LX","LY","LZ","SX","VL","VN","VO","VP","VQ","VT","WL"]
+                       "HO", "HP","HQ","HR","HS","HT","HU","HV","HW","HX","HY","HZ","IA","IB","IC","ID","IE","IF",
+                       "IG","IH","LA","LC","LD","LE","LF","LG","LH","LI","LJ","LK","LL","LM","LN","LO","LQ","LR",
+                       "LS","LU","LV","LW","LX","LY","LZ","SX","VL","VN","VO","VP","VQ","VT","WL"]
 
 silent_seal_codes = ["CE", "SB", "ED", "EE", "EG", "EH", "EI", "EJ", "EK", "EM", "EN", "EO", "EP", "ER", "ES", "ET",
                      "EU", "EW", "EZ",
@@ -73,10 +70,45 @@ silent_seal_codes = ["CE", "SB", "ED", "EE", "EG", "EH", "EI", "EJ", "EK", "EM",
 
 tube_gasket_codes = {'15':'2-028G','20':'2-032G','25':'2-035G','32':'2-041G','40':'2-044G',
                      '50':'2-048G','60':'2-050G','80':'2-265G'}
+
 wearband_codes ={'15':'N15-PWB','20':'N20-PWB','25':'N25-PWB','32':'N32-PWB','40':'N40-PWB',
                  '50':'N50-PWB','60':'N60-PWB','80':'N80-PWB'}
-# --- Parsing and Calculation Functions ---
 
+bumper_rear_codes =["BB","BD","BE","BG","BI","BJ","BL","BM","BN","BO","BP","BQ","BS","BT","BU","BV","BW","CD",
+                     "DB","DG","DH","DI","DK","DL","DP","DQ","FB","HA","HB","HC","HD","HI","HJ","HK","HL","HM",
+                     "HN","HO","HP","HY","HZ","IA","IB","IC","ID","IE","IF","LB","LC","LD","LE","LU","LX","LY",
+                     "LZ","MF","MG","MH","MI","SJ","SK","SL","SQ","SX","VD","VH","VI","VJ","VK","VO","VP","VQ",
+                     "VT","WB"]
+
+bumper_front_codes = ["BB","BD","BE","BG","BI","BJ","BL","BM","BN","BO","BP","BQ",
+                      "BS","BT","BU","BV","BW","DB","DF","DG","DH","DI","DK","DL",
+                      "DP","DQ","FB","HA","HB","HC","HD","HI","HJ","HK","HL","HM",
+                      "HN","HO","HP","HY","HZ","IA","IB","IC","ID","IE","IF","LC",
+                      "LD","LE","LU","LX","LY","LZ","MF","MG","MH","MI","SK","SL",
+                      "SP","SQ","VD","VH","VI","VJ","VK","VO","VP","VQ","VT","WB"]
+
+bumper_both_codes = {'BB','BD','BE','BG','BI','BJ','BL','BM','BN','BO','BP','BQ','BS','BT','BU','BV','BW',
+                    'DB','DG','DH','DI','DK','DL','DP','DQ','FB','HA','HB','HC','HD','HI','HJ','HK','HL',
+                    'HM','HN','HO','HP','HY','HZ','IA','IB','IC','ID','IE','IF','LC','LD','LE','LU','LX',
+                    'LY','LZ','MF','MG','MH','MI','SK','SL','SQ','VD','VH','VI','VJ','VK','VO','VP','VQ',
+                    'VT','WB','MB','PB','PG'}
+
+stainless_fastener_codes = ["AH","BE","BE","BG","BN","BO","BQ","BS","BT","CS","CU","DC","DD","DE","DK","DL",
+                             "DP","DQ","DT","DI","DZ","EF","EH","EU","EI","EJ","EK","ES","ET","EU","EZ","HA",
+                             "HB","HC","HD","HE","HF","HG","HH","HM","HN","HO","HP","HU","HV","HW","HX","IC",
+                             "ID","IE","IF","LA","LD","LE","LK","LL","LN","LO","LQ","LS","MC","ME","MH","MI",
+                             "MJ","MK","MS","PH","PI","PS","PT","RW","SM","SJ","SM","SO","SP","SQ","SS","ST",
+                             "SV","SU","SW","SX","SY","VC","VE","VG","VJ","VK","VL","VN","VQ","VT"]
+
+stainless_rod_codes = ["AH","BE","BG","BN","BO","BQ","BS","BU","CR","CU","DC","DD","DE",
+                       "DJ","DK","DL","DP","DQ","DS","DU","DZ","EE","EF","EH","EI","EJ",
+                       "EK","ER","ES","EZ","HA","HB","HC","HD","HE","HF","HG","HH","HM",
+                       "HN","HO","HP","HU","HV","HW","HX","IC","ID","IE","IF","LA","LD",
+                       "LE","LK","LL","LN","LO","LR","MC","MD","ME","MH","MI","MJ","MQ",
+                       "MS","PC","PE","PF","RW","SK","SL","SP","SQ","SS","SU","SV","SW",
+                       "SX","SY","VC","VE","VG","VJ","VK","VQ","VR","VT","VU","WC","WD",
+                       "WE","WR","EU","LS","PI","PS","SR","ST","VL","VN"]
+# --- Parsing and Calculation Functions ---
 def split_part_number(part_number):
     """
     Parses a NFPA part number using a specific pattern.
@@ -206,6 +238,8 @@ def piston_rod_calc(bore, rod_style, cushions, stroke, fractional_stroke, extens
     elif bore in ('60','80') and cushions != 'A':
         rod_prefix = 'N32'
         rod_code = {'1':'-30CX','2':'-35CX','3':'-40CX','6':'-10CX','7':'-15CX','8':'-20CX'}
+    if options in stainless_rod_codes:
+        rod_prefix += 'SR'
 
     rod_adder = 0
     total_extension = 0
@@ -282,7 +316,11 @@ def rod_bushing_calc(bore, rod_style, options):
     bushing_number = '90'
     bushing_prefix = ''
     if bore in ('15', '20', '25'):
-        bushing_prefix = 'N15-' if rod_style in ('1', '2', '3') else 'N32-'
+        if bore == '15' and rod_style in ('6','7','8'):
+            bushing_prefix = 'N15'
+            bushing_number = '95'
+        else:
+            bushing_prefix = 'N15-' if rod_style in ('1', '2', '3') else 'N32-'
     elif bore in ('32', '40', '50'):
         bushing_prefix = 'N32-' if rod_style in ('1', '2', '3') else 'N60-'
     elif bore in ('60', '80'):
@@ -295,7 +333,7 @@ def rod_bushing_calc(bore, rod_style, options):
     return rod_bushing
 
 
-def tube_calc(bore, options, stroke):
+def tube_calc(bore, options, stroke, fractional_stroke):
     cylinder_prefix = ''
     cylinder_length = 0
     if bore == '15':
@@ -326,11 +364,11 @@ def tube_calc(bore, options, stroke):
         cylinder_length += 0.125
     elif options in ('BR', 'BF'):
         cylinder_length += 0.063
-    cylinder_tube = f"{cylinder_prefix}{(cylinder_length + int(stroke)):.3f}"
+    cylinder_tube = f"{cylinder_prefix}{(cylinder_length + int(stroke) + fractional_stroke_value[fractional_stroke]):.3f}"
     return cylinder_tube
 
 
-def tie_rod_calc(bore, options, stroke, mounting):
+def tie_rod_calc(bore, options, stroke, mounting, fractional_stroke):
     quantity = 4
     tie_rod_adder = 0
     tie_rod_prefix = ''
@@ -460,7 +498,7 @@ def tie_rod_calc(bore, options, stroke, mounting):
             tie_rod_adder = 8.125
     if mounting == 'S1':
         quantity = 2
-    tie_rod = f"{tie_rod_prefix}{(tie_rod_adder + int(stroke)):.3f}  ({quantity})"
+    tie_rod = f"{tie_rod_prefix}{(tie_rod_adder + int(stroke) + fractional_stroke_value[fractional_stroke]):.3f}  ({quantity})"
 
     return tie_rod
 
@@ -619,6 +657,7 @@ def piston_seal_calc(bore, rod_style, options):
                 piston_seal = '8410-0737V'
         if options in silent_seal_codes:
             piston_seal = '4283BMP8000-500'
+    piston_seal += ' ' + '(2)'
     return piston_seal
 
 
@@ -663,6 +702,8 @@ def bushing_seal_calc(bore,rod_style,options):
     bushing_seal =''
     if bore in ('15','20','25'):
         bushing_seal = '2-122' if rod_style in ('1','2','3') else '2-222'
+        if bore == '15' and rod_style in ('6','7','8'):
+            bushing_seal = '2-125'
         if options in viton_codes:
             bushing_seal +='V'
     elif bore in ('32','40','50'):
@@ -690,6 +731,195 @@ def rod_bearing_calc(bore, rod_style, options):
         rod_bearing = '701-600022-039' if rod_style in ('1', '2', '3') else '701-00028-044'
     return rod_bearing
 
+def retaining_ring_calc(bore, options):
+    retaining_ring = ''
+    if bore in ('15','20','25'):
+        retaining_ring = 'N5008-131' if options not in stainless_fastener_codes else 'N5008-131SS'
+    elif bore in ('32','40','50'):
+        retaining_ring = 'N5008-175' if options not in stainless_fastener_codes else 'N5008-175SS'
+    elif bore in ('60','80'):
+        retaining_ring = 'N5008-237PA' if options not in stainless_fastener_codes else 'N5008-237SS'
+    if options in double_rod_codes:
+        retaining_ring += ' ' + '(2)'
+    return retaining_ring
+
+def bumper_calc(bore,options):
+    bumper = ''
+    if options in bumper_both_codes or options in bumper_front_codes or options in bumper_rear_codes:
+        if bore == '15':
+            bumper = 'SO-17-600'
+        elif bore == '20':
+            bumper = '221-BR-1'
+        elif bore == '25':
+            bumper = '321-BR-1'
+        elif bore == '32':
+            bumper = '1221-BR'
+        elif bore == '40':
+            bumper = '1221-BR'
+        elif bore in ('50','60','80'):
+            bumper = 'MPS-371-66'
+        if options in bumper_both_codes:
+            bumper += ' ' + '(2)'
+    else:
+        bumper = None
+    return bumper
+
+def cushion_spud_calc(bore,rod_style,cushions,options):
+    rod_spud = ''
+    rear_spud = ''
+    cushioning_seal = ''
+    cushioning_seal_2 = ''
+    if cushions != 'A':
+        if bore in ('15','20','25'):
+            rod_spud = 'N15-300' if rod_style in ('1','2','3') else 'N15-310'
+            rear_spud = 'N15-305' if rod_style in ('1','2','3') else 'N15-315'
+            if cushions in ('F','G','H','J','W'):
+                cushioning_seal = 'V6-04.0020N4181A85' if rod_style in ('1','2','3') else 'V6-05.0032N4181A85'
+                cushioning_seal_2 = None
+            elif cushions in ('B','C','D','Y'):
+                cushioning_seal = 'V6-04.0020N4181A85'
+                if rod_style in ('1', '2', '3'):
+                    cushioning_seal += ' ' + '(2)'
+                    cushioning_seal_2 = None
+                else:
+                    cushioning_seal_2 = 'V6-05.0032N4181A85'
+            elif cushions in ('K','L','M','N','V'):
+                cushioning_seal = 'V6-04.0020N4181A85'
+        elif bore in ('32','40','50'):
+            rod_spud = 'N32-300' if rod_style in ('1', '2', '3') else 'N32-310'
+            rear_spud = 'N32-305' if rod_style in ('1', '2', '3') else 'N32-315'
+            if cushions in ('F', 'G', 'H', 'J', 'W'):
+                cushioning_seal = 'V6-05.0032N4181A85' if rod_style in ('1', '2', '3') else 'V6-05.0038N4181A85'
+                cushioning_seal_2 = None
+            elif cushions in ('B', 'C', 'D', 'Y'):
+                cushioning_seal = 'V6-05.0032N4181A85'
+                if rod_style in ('1', '2', '3'):
+                    cushioning_seal += ' ' + '(2)'
+                    cushioning_seal_2 = None
+                else:
+                    cushioning_seal_2 = 'V6-05.0038N4181A85'
+            elif cushions in ('K', 'L', 'M', 'N', 'V'):
+                cushioning_seal = 'V6-05.0032N4181A85'
+        elif bore in ('60','80'):
+            rod_spud = 'N60-300' if rod_style in ('1', '2', '3') else 'N60-310'
+            rear_spud = 'N60-305' if rod_style in ('1', '2', '3') else 'N60-315'
+            if cushions in ('F', 'G', 'H', 'J', 'W'):
+                cushioning_seal = 'V6-05.0038N4181A85' if rod_style in ('1', '2', '3') else 'V6-05.0050N4181A85'
+                cushioning_seal_2 = None
+            elif cushions in ('B', 'C', 'D', 'Y'):
+                cushioning_seal = 'V6-05.0038N4181A85'
+                if rod_style in ('1', '2', '3'):
+                    cushioning_seal += ' ' + '(2)'
+                    cushioning_seal_2 = None
+                else:
+                    cushioning_seal_2 = 'V6-05.0050N4181A85'
+            elif cushions in ('K', 'L', 'M', 'N', 'V'):
+                cushioning_seal = 'V6-05.0038N4181A85'
+        if options in double_rod_codes:
+            rear_spud = None
+            rod_spud += ' ' + '(2)'
+    return rod_spud,rear_spud,cushioning_seal,cushioning_seal_2
+
+def tierod_nut_calc(bore,options,mounting):
+    tierod_nut = ''
+    if bore == '15':
+        tierod_nut = '1/4-28' if options not in stainless_fastener_codes else '1/4-28SS'
+    elif bore in ('20','25'):
+        tierod_nut = '5/16-24' if options not in stainless_fastener_codes else '5/16-24SS'
+    elif bore in ('32','40'):
+        tierod_nut = '3/8-24' if options not in stainless_fastener_codes else '3/8-24SS'
+    elif bore in ('50','60'):
+        tierod_nut = '1/2-20' if options not in stainless_fastener_codes else '1/2-20SS'
+    elif bore == '80':
+        tierod_nut = '5/8-18' if options not in stainless_fastener_codes else '5/8-18SS'
+    if mounting in ('P1','P2','P3','P4','F1','F2','E3','E4'):
+        tierod_nut += ' ' + '(4)'
+    elif mounting in ('SN','SE','SF'):
+        if bore == '15':
+            tierod_nut = 'FCQN-0150-SN'
+        elif bore in ('20', '25'):
+            tierod_nut = 'FCQN-0200/250-SN'
+        elif bore in ('32', '40'):
+            tierod_nut = 'FCQN-0325/400-SN'
+        elif bore in ('50', '60'):
+            tierod_nut = 'N50-SN'
+        elif bore == '80':
+            tierod_nut = 'N/A'
+        if options in double_rod_codes:
+            tierod_nut += ' ' + '(8)'
+        else:
+            tierod_nut += ' ' + '(4)'
+    else:
+        tierod_nut += ' ' + '(8)'
+    return tierod_nut
+
+def pivot_calc(bore,mounting, options):
+    pivot_mount = None
+    pivot_bushing = None
+    pivot_pin = None
+    pivot_ring = None
+    if mounting in ('P1','P3'):
+        if bore in ('15','20','25'):
+            pivot_bushing = '521-370 (2)' if mounting == 'P1' else 'CP8011-2'
+        elif bore in ('32','40','50'):
+            pivot_bushing = 'AA083901 (2)'
+        elif bore in ('60','80'):
+            pivot_bushing = 'EP161812 (2)'
+    if mounting in ('P2','P4'):
+        if bore == '15':
+            pivot_mount = 'BMP2-15-T' if mounting == 'P2' else 'BMP4-15-T'
+        elif bore == '20':
+            pivot_mount = 'BMP2-2-T' if mounting == 'P2' else 'BMP4-2-T'
+        elif bore == '25':
+            pivot_mount = 'BMP2-25-T' if mounting == 'P2' else 'BMP4-25-T'
+        elif bore == '32':
+            pivot_mount = 'BMP2-32-T' if mounting == 'P2' else 'BMP4-32-T'
+        elif bore == '40':
+            pivot_mount = 'BMP2-4-T' if mounting == 'P2' else 'BMP4-4-T'
+        elif bore == '50':
+            pivot_mount = 'BMP2-5-T' if mounting == 'P2' else 'N50-MP4'
+        elif bore == '60':
+            pivot_mount = 'BMP2-6-T' if mounting == 'P2' else 'N60-MP4'
+        elif bore == '80':
+            pivot_mount = 'N80-MP2' if mounting == 'P2' else 'N80-MP4'
+    if mounting in ('P1','P2'):
+        if bore in ('15','20','25'):
+            pivot_pin = 'HP11-155' if options not in stainless_fastener_codes else 'N15-500SS'
+            pivot_ring = 'N5100-50 (2)' if options not in stainless_fastener_codes else 'N5100-50SS (2)'
+        elif bore in ('32','40','50'):
+            pivot_pin = 'HP30-155' if options not in stainless_fastener_codes else 'N32-750SS'
+            pivot_ring = 'N5100-75 (2)' if options not in stainless_fastener_codes else 'N5100-75SS (2)'
+        elif bore in ('60','80'):
+            pivot_pin = 'HP60-155' if options not in stainless_fastener_codes else 'N60-100SS'
+            pivot_ring = 'N5100-100 (2)' if options not in stainless_fastener_codes else 'N5100-100SS (2)'
+    return pivot_bushing,pivot_mount,pivot_pin,pivot_ring
+
+def piston_bolt_calc(bore,options,rod_style,cushions):
+    piston_bolt = ''
+    if options not in double_rod_codes:
+        if bore in ('15','20','30'):
+            if rod_style in ('1','2','3'):
+                piston_bolt = 'M8x1.25x40SHCS' if cushions != 'A' else 'M8x1.25x50SHCS'
+            else:
+                piston_bolt = '1/2-20X1-3/4SHCS' if cushions != 'A' else '1/2-20X2-1/2SHCS'
+        elif bore in ('32','40'):
+            if rod_style in ('1','2','3'):
+                piston_bolt = 'M14x2.0x50SHCS' if cushions != 'A' else 'M14x2.0x60SHCS'
+            else:
+                piston_bolt = '3/4-16X2SHCS' if cushions != 'A' else '3/4-16X3SHCS'
+        elif bore == '50':
+            if rod_style in ('1','2','3'):
+                piston_bolt = 'M14x2.0x50SHCS' if cushions != 'A' else 'M14x2.0x60SHCS'
+            else:
+                piston_bolt = '3/4-16X2-1/4SHCS' if cushions != 'A' else '3/4-16X3SHCS'
+        elif bore in ('60','80'):
+            if rod_style in ('1','2','3'):
+                piston_bolt = '3/4-16X2-1/4SHCS' if cushions != 'A' else '3/4-16X3SHCS'
+            else:
+                piston_bolt = '3/4-16X2-1/2SHCS' if cushions != 'A' else '3/4-16X3SHCS'
+    else:
+        piston_bolt = None
+    return piston_bolt
 # --- New Function for Generating BOM ---
 def generate_bom(parsed_data):
     """
@@ -712,17 +942,37 @@ def generate_bom(parsed_data):
     rod_2 = None
     piston_head = piston_head_calc(bore, rod_style, options)
     rod_bushing = rod_bushing_calc(bore, rod_style, options)
-    cylinder_tube = tube_calc(bore, options, stroke)
-    tie_rod = tie_rod_calc(bore, options, stroke, mounting)
+    cylinder_tube = tube_calc(bore, options, stroke, fractional_stroke)
+    tie_rod = tie_rod_calc(bore, options, stroke, mounting, fractional_stroke)
     tie_rod_2 = None
     rod_seal = rod_seal_calc(bore, rod_style, options)
     piston_seal = piston_seal_calc(bore, rod_style, options)
     rod_wiper = rod_wiper_calc(bore, rod_style, options)
-    tube_gasket = tube_gasket_codes[bore]
+    tube_gasket = tube_gasket_codes[bore] + ' ' + '(2)'
     bushing_seal = bushing_seal_calc(bore,rod_style,options)
     wearband = wearband_codes[bore]
     rod_bearing = rod_bearing_calc(bore, rod_style, options)
-    magnet_number = magnet_chart[bore] if magnet == 'E' else None
+    magnet_number = magnet_chart[bore] + ' ' + '(2)' if magnet == 'E' else None
+    retaining_ring = retaining_ring_calc(bore,options)
+    bumper = bumper_calc(bore,options)
+    tierod_nut = tierod_nut_calc(bore,options,mounting)
+    piston_bolt = piston_bolt_calc(bore,options,rod_style,cushions)
+    pivot_bushing,pivot_mount,pivot_pin,pivot_ring = pivot_calc(bore,mounting,options)
+    rod_spud, rear_spud, cushioning_seal, cushioning_seal_2 = cushion_spud_calc(bore,rod_style,cushions,options)
+
+    if cushions != 'A':
+        needle_seal = ''
+        adjustable_cushion = '708386' if bore in ('15','20','25') else '708392'
+        if options in viton_codes:
+            needle_seal = '600-100F75' if bore in ('15','20','25') else '1000-100F75'
+        if cushions in ('B','C','D','E'):
+            adjustable_cushion += ' ' + '(2)'
+            if options in viton_codes:
+                needle_seal += ' ' + '(2)'
+    else:
+        adjustable_cushion = None
+        needle_seal = None
+
 
     if mounting == 'S1':
         adder = {'15': 0.65, '20': 0.625, '25': 0.65, '32': 1, '40': 1.1, '50': 1, '60': 1.15, '80': 0.5}
@@ -750,23 +1000,20 @@ def generate_bom(parsed_data):
         elif not extension:
             rod += '  (2)'
 
+
+
+
     # Return all BOM parts in a dictionary
     return {
-        "front_head": front_head,
-        "rear_cover": rear_cover,
-        "rod": rod,
-        "rod_2": rod_2,
-        "piston_head": piston_head,
-        "rod_bushing": rod_bushing,
-        "cylinder_tube": cylinder_tube,
-        "tie_rod": tie_rod,
-        "tie_rod_2": tie_rod_2,
-        "rod_seal": rod_seal,
-        "piston_seal": piston_seal,
-        "rod_wiper": rod_wiper,
-        "tube_gasket": tube_gasket,
-        "bushing_seal": bushing_seal,
-        "wearband" : wearband,
-        "rod_bearing" : rod_bearing,
-        "magnet_number": magnet_number
-    }
+            "front_head":front_head,"rear_cover":rear_cover,"rod":rod,
+            "rod_2":rod_2,"piston_head":piston_head,"rod_bushing":rod_bushing,
+            "cylinder_tube":cylinder_tube,"tie_rod":tie_rod,"tie_rod_2":tie_rod_2,"rod_seal":rod_seal,
+            "piston_seal":piston_seal,"rod_wiper":rod_wiper,"tube_gasket":tube_gasket,
+            "bushing_seal":bushing_seal,"wearband":wearband,"rod_bearing":rod_bearing,
+            "magnet_number":magnet_number,"retaining_ring":retaining_ring,"bumper":bumper,
+            "tierod_nut":tierod_nut,"piston_bolt":piston_bolt,"adjustable_cushion": adjustable_cushion,
+            "needle_seal": needle_seal, "pivot_bushing": pivot_bushing, "pivot_mount": pivot_mount,
+            "pivot_pin": pivot_pin,"pivot_ring": pivot_ring, "rod_spud": rod_spud, "rear_spud": rear_spud,
+            "cushioning_seal": cushioning_seal, "cushioning_seal_2": cushioning_seal_2,
+
+            }
