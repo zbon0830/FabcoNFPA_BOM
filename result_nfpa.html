@@ -54,7 +54,7 @@
         }
         .copy-box {
             width: 90%;
-            height: 300px;
+            height: 550px;
             padding: 10px;
             font-size: 16px;
             border: 1px solid #ccc;
@@ -106,14 +106,29 @@
             <p><strong>Cylinder Tube:</strong> {{ cylinder_tube }}</p>
             <p><strong>Tie Rod:</strong> {{ tie_rod }}</p>
             {% if tie_rod_2 %}<p><strong>Tie Rod 2:</strong> {{ tie_rod_2 }}</p>{% endif %}
+            <p><strong>Tie Rod Nut:</strong> {{ tierod_nut }}</p>
             <p><strong>Rod Bearing:</strong> {{ rod_bearing }}</p>
+            {% if piston_bolt %}<p><strong>Piston Bolt:</strong> {{ piston_bolt }}</p>{% endif %}
+            <p><strong>Retaining Ring:</strong> {{ retaining_ring }}</p>
             <p><strong>Rod Seal:</strong> {{ rod_seal }}</p>
             <p><strong>Piston Seal:</strong> {{ piston_seal }}</p>
             <p><strong>Bushing Seal:</strong> {{ bushing_seal }}</p>
             <p><strong>Tube Gasket:</strong> {{ tube_gasket }}</p>
             <p><strong>Rod Wiper:</strong> {{ rod_wiper }}</p>
             <p><strong>Wearband:</strong> {{ wearband }}</p>
-            <p><strong>Magnet:</strong> {{ magnet_number }}</p>
+            {% if magnet_number %}<p><strong>Magnet:</strong> {{ magnet_number }}</p>{% endif %}
+            {% if bumper %}<p><strong>Bumper:</strong> {{ bumper }}</p>{% endif %}
+            {% if adjustable_cushion %}<p><strong>Needle Assembly:</strong> {{ adjustable_cushion }}</p>{% endif %}
+            {% if needle_seal %}<p><strong>Needle Seal:</strong> {{ needle_seal }}</p>{% endif %}
+            {% if rod_spud %}<p><strong>Cushion Spud:</strong> {{ rod_spud }}</p>{% endif %}
+            {% if rear_spud %}<p><strong>Cushion Spud:</strong> {{ rear_spud }}</p>{% endif %}
+            {% if cushioning_seal %}<p><strong>Cushioning Seal:</strong> {{ cushioning_seal }}</p>{% endif %}
+            {% if cushioning_seal_2 %}<p><strong>Cushioning Seal:</strong> {{ cushioning_seal_2 }}</p>{% endif %}
+            {% if pivot_bushing %}<p><strong>Pivot Bushing:</strong> {{ pivot_bushing }}</p>{% endif %}
+            {% if pivot_mount %}<p><strong>Pivot Mount:</strong> {{ pivot_mount }}</p>{% endif %}
+            {% if pivot_pin %}<p><strong>Pivot Pin:</strong> {{ pivot_pin }}</p>{% endif %}
+            {% if pivot_ring %}<p><strong>Pivot Lock Ring:</strong> {{ pivot_ring }}</p>{% endif %}
+
             <a href="/" class="back-button">Analyze Another Part</a>
         </div>
         <!-- Copy BOM Section (Right) -->
@@ -129,14 +144,28 @@
 {{ cylinder_tube }}
 {{ tie_rod }}{% if tie_rod_2 %}
 {{ tie_rod_2 }}{% endif %}
-{{ rod_bearing }}
+{{ tierod_nut }}
+{{ rod_bearing }}{% if piston_bolt %}
+{{ piston_bolt }}{% endif %}
+{{ retaining_ring }}
 {{ rod_seal }}
 {{ piston_seal }}
 {{ bushing_seal }}
 {{ rod_wiper }}
 {{ tube_gasket }}
 {{ wearband }}{% if magnet_number %}
-{{ magnet_number}}{% endif %}
+{{ magnet_number}}{% endif %}{% if bumper %}
+{{ bumper}}{% endif %}{% if adjustable_cushion %}
+{{ adjustable_cushion }}{% endif %}{% if needle_seal %}
+{{ needle_seal }}{% endif %}{% if rod_spud %}
+{{ rod_spud }}{% endif %}{% if rear_spud %}
+{{ rear_spud }}{% endif %}{% if cushioning_spud %}
+{{ cushioning_spud }}{% endif %}{% if cushioning_spud_2 %}
+{{ cushioning_spud_2 }}{% endif %}{% if pivot_bushing %}
+{{ pivot_bushing}}{% endif %}{% if pivot_mount %}
+{{ pivot_mount}}{% endif %}{% if pivot_pin %}
+{{ pivot_pin}}{% endif %}{% if pivot_ring %}
+{{ pivot_ring }}{% endif %}
 
             </textarea>
             <button class="copy-button" onclick="copyBOM()">Copy to Clipboard</button>
