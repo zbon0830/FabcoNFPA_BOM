@@ -35,48 +35,48 @@ cushion_position = {'B':'1','K':'1','C':'2','L':'2','D':'3','M':'3','E':'4','N':
                     'F':'1','G':'2','H':'3','J':'4'}
 
 #lists of all codes with respective seals / features
-male_rod_codes = ["BI","BJ","BM","BN","BO","BQ","BU","DM","DN","DO","DX","DY",
+male_rod_codes = {"BI","BJ","BM","BN","BO","BQ","BU","DM","DN","DO","DX","DY",
             "EF","EG","EH","EI","EJ","EM","EN","EO","EU","HA","HB","HC",
             "HD","HQ","HR","HS","HT","HU","HV","HW","HX","HY","HZ","IA",
             "IB","IC","ID","IE","IF","LH","LI","LJ","LK","LL","LM","LN",
             "LO","LU","LX","LY","LZ","MC","MD","ME","MF","MG","MH","MI",
             "MJ","MK","MQ","PM","SL","SM","VB","VC","VD","VE","VF","VG",
-            "VH","VI","VJ","VK","VM","WC","WM"]
+            "VH","VI","VJ","VK","VM","WC","WM"}
 
-viton_codes = ["PD","PN","PU","PV","PX","PZ","LZ","MJ","LY","LO","LI","IH","IF","IE","IB","IA",
+viton_codes = {"PD","PN","PU","PV","PX","PZ","LZ","MJ","LY","LO","LI","IH","IF","IE","IB","IA",
                 "HX","HW","HR","HT","HS","HO","HP","HK","HG","HH","HC","HD","DV","DP","DJ","DH","DC","DQ",
                 "BV","BQ","BU","BG","BJ","BD","AH","SQ","SO","SV","SY","VB","VC","VD","VE","VF","VG",
                 "VH","VI","VJ","VK","VL","VM","VN","VO","VP","VQ","VR","VS","VT","VU","WE","WG","WH",
-                "WN","WT","WU","WV","WW","WY"]
+                "WN","WT","WU","WV","WW","WY"}
 
-double_rod_codes = ["DB","DC","DD","DE","DF","DG","DH","DI","DJ","DK","DL","DM","DN","DO","DP","DQ",
+double_rod_codes = {"DB","DC","DD","DE","DF","DG","DH","DI","DJ","DK","DL","DM","DN","DO","DP","DQ",
                     "DR","DS","DT","DU","DV","DW","DX","DY","DZ","ED","EE","EF","EG","EH","EI","EN","HE",
                     "HF","HG","HH","HI","HJ","HK","HL","HM","HN","HO","HP","HQ","HR","HS","HT","HU","HV",
                     "HW","HX","HY","HZ","IA","IB","IC","ID","IE","IF","IG","IH","LG","ME","MI","MJ","PD",
                     "PN","PR","PY","PZ","SP","VF","VG","VH","VI","VJ","VK","VU","WF","WH","WJ","WL","WN",
-                    "WT","WX","WY"]
+                    "WT","WX","WY"}
 
-polypak_rod_codes = ["BP","EP","MP","PA","PB","PC","PD","PE","PE","PG","PH","PI","PM","PN","PQ","PR",
-                     "PS","PT","PU","PV","PW","PY","WB","WN","WO","WP","WQ","WU","WW","WX","WY","WZ"]
+polypak_rod_codes = {"BP","EP","MP","PA","PB","PC","PD","PE","PE","PG","PH","PI","PM","PN","PQ","PR",
+                     "PS","PT","PU","PV","PW","PY","WB","WN","WO","WP","WQ","WU","WW","WX","WY","WZ"}
 
-polypak_piston_codes = ["PC","PF","PG","PN","PQ","PP","PV","PX","PZ","WB","WG","WH","WJ","WK","WN","WQ",
-                        "WW","WX"]
+polypak_piston_codes = {"PC","PF","PG","PN","PQ","PP","PV","PX","PZ","WB","WG","WH","WJ","WK","WN","WQ",
+                        "WW","WX"}
 
-metallic_scraper_codes = ["AH", "BD", "BE", "BG", "BI", "BJ", "BO", "BU", "BW", "DE", "DG", "DI", "DJ", "DL", "DQ",
+metallic_scraper_codes = {"AH", "BD", "BE", "BG", "BI", "BJ", "BO", "BU", "BW", "DE", "DG", "DI", "DJ", "DL", "DQ",
                          "DW","DZ","EE", "EG","EI","EJ","EK","EO","EW","HB","HD","HF","HH","HJ","HL","HN","HP","HR",
                          "HT","HV","HW", "HX","HZ","IB","IF","ID","LA","LC","LE","LF","LG","LH","LI","LJ","LL","LO",
                          "LX","LZ","ME","MG","MI","MP","MS","PH","PI","PR","PW","SW","VB","VE","VF","VG","VI","VK",
                          "VP","VT","WB","WC","WD","WE","WF","WG","WH","WJ","WK","WL","WM","WN","WO","WP","WQ","WR",
-                         "WS","WT","WU","WV","WW","WX","WY","WZ"]
+                         "WS","WT","WU","WV","WW","WX","WY","WZ"}
 
-low_breakaway_codes = ["LB","BL","HA","HB","HC","HD","HE","HF","HG","HH","HI","HJ","HK","HL","HM","HN",
+low_breakaway_codes = {"LB","BL","HA","HB","HC","HD","HE","HF","HG","HH","HI","HJ","HK","HL","HM","HN",
                        "HO", "HP","HQ","HR","HS","HT","HU","HV","HW","HX","HY","HZ","IA","IB","IC","ID","IE","IF",
                        "IG","IH","LA","LC","LD","LE","LF","LG","LH","LI","LJ","LK","LL","LM","LN","LO","LQ","LR",
-                       "LS","LU","LV","LW","LX","LY","LZ","SX","VL","VN","VO","VP","VQ","VT","WL"]
+                       "LS","LU","LV","LW","LX","LY","LZ","SX","VL","VN","VO","VP","VQ","VT","WL"}
 
-silent_seal_codes = ["CE", "SB", "ED", "EE", "EG", "EH", "EI", "EJ", "EK", "EM", "EN", "EO", "EP", "ER", "ES", "ET",
+silent_seal_codes = {"CE", "SB", "ED", "EE", "EG", "EH", "EI", "EJ", "EK", "EM", "EN", "EO", "EP", "ER", "ES", "ET",
                      "EU", "EW", "EZ",
-                     "PR", "PY", "SB", "WI", "WZ"]
+                     "PR", "PY", "SB", "WI", "WZ"}
 
 tube_gasket_codes = {'15':'2-028G','20':'2-032G','25':'2-035G','32':'2-041G','40':'2-044G',
                      '50':'2-048G','60':'2-050G','80':'2-265G'}
@@ -84,18 +84,18 @@ tube_gasket_codes = {'15':'2-028G','20':'2-032G','25':'2-035G','32':'2-041G','40
 wearband_codes ={'15':'N15-PWB','20':'N20-PWB','25':'N25-PWB','32':'N32-PWB','40':'N40-PWB',
                  '50':'N50-PWB','60':'N60-PWB','80':'N80-PWB'}
 
-bumper_rear_codes =["BB","BD","BE","BG","BI","BJ","BL","BM","BN","BO","BP","BQ","BS","BT","BU","BV","BW","CD",
+bumper_rear_codes = {"BB","BD","BE","BG","BI","BJ","BL","BM","BN","BO","BP","BQ","BS","BT","BU","BV","BW","CD",
                      "DB","DG","DH","DI","DK","DL","DP","DQ","FB","HA","HB","HC","HD","HI","HJ","HK","HL","HM",
                      "HN","HO","HP","HY","HZ","IA","IB","IC","ID","IE","IF","LB","LC","LD","LE","LU","LX","LY",
                      "LZ","MF","MG","MH","MI","SJ","SK","SL","SQ","SX","VD","VH","VI","VJ","VK","VO","VP","VQ",
-                     "VT","WB"]
+                     "VT","WB"}
 
-bumper_front_codes = ["BB","BD","BE","BG","BI","BJ","BL","BM","BN","BO","BP","BQ",
+bumper_front_codes = {"BB","BD","BE","BG","BI","BJ","BL","BM","BN","BO","BP","BQ",
                       "BS","BT","BU","BV","BW","DB","DF","DG","DH","DI","DK","DL",
                       "DP","DQ","FB","HA","HB","HC","HD","HI","HJ","HK","HL","HM",
                       "HN","HO","HP","HY","HZ","IA","IB","IC","ID","IE","IF","LC",
                       "LD","LE","LU","LX","LY","LZ","MF","MG","MH","MI","SK","SL",
-                      "SP","SQ","VD","VH","VI","VJ","VK","VO","VP","VQ","VT","WB"]
+                      "SP","SQ","VD","VH","VI","VJ","VK","VO","VP","VQ","VT","WB"}
 
 bumper_both_codes = {'BB','BD','BE','BG','BI','BJ','BL','BM','BN','BO','BP','BQ','BS','BT','BU','BV','BW',
                     'DB','DG','DH','DI','DK','DL','DP','DQ','FB','HA','HB','HC','HD','HI','HJ','HK','HL',
@@ -103,21 +103,21 @@ bumper_both_codes = {'BB','BD','BE','BG','BI','BJ','BL','BM','BN','BO','BP','BQ'
                     'LY','LZ','MF','MG','MH','MI','SK','SL','SQ','VD','VH','VI','VJ','VK','VO','VP','VQ',
                     'VT','WB','MB','PB','PG'}
 
-stainless_fastener_codes = ["AH","BE","BE","BG","BN","BO","BQ","BS","BT","CS","CU","DC","DD","DE","DK","DL",
+stainless_fastener_codes = {"AH","BE","BE","BG","BN","BO","BQ","BS","BT","CS","CU","DC","DD","DE","DK","DL",
                              "DP","DQ","DT","DI","DZ","EF","EH","EU","EI","EJ","EK","ES","ET","EU","EZ","HA",
                              "HB","HC","HD","HE","HF","HG","HH","HM","HN","HO","HP","HU","HV","HW","HX","IC",
                              "ID","IE","IF","LA","LD","LE","LK","LL","LN","LO","LQ","LS","MC","ME","MH","MI",
                              "MJ","MK","MS","PH","PI","PS","PT","RW","SM","SJ","SM","SO","SP","SQ","SS","ST",
-                             "SV","SU","SW","SX","SY","VC","VE","VG","VJ","VK","VL","VN","VQ","VT"]
+                             "SV","SU","SW","SX","SY","VC","VE","VG","VJ","VK","VL","VN","VQ","VT"}
 
-stainless_rod_codes = ["AH","BE","BG","BN","BO","BQ","BS","BU","CR","CU","DC","DD","DE",
+stainless_rod_codes = {"AH","BE","BG","BN","BO","BQ","BS","BU","CR","CU","DC","DD","DE",
                        "DJ","DK","DL","DP","DQ","DS","DU","DZ","EE","EF","EH","EI","EJ",
                        "EK","ER","ES","EZ","HA","HB","HC","HD","HE","HF","HG","HH","HM",
                        "HN","HO","HP","HU","HV","HW","HX","IC","ID","IE","IF","LA","LD",
                        "LE","LK","LL","LN","LO","LR","MC","MD","ME","MH","MI","MJ","MQ",
                        "MS","PC","PE","PF","RW","SK","SL","SP","SQ","SS","SU","SV","SW",
                        "SX","SY","VC","VE","VG","VJ","VK","VQ","VR","VT","VU","WC","WD",
-                       "WE","WR","EU","LS","PI","PS","SR","ST","VL","VN"]
+                       "WE","WR","EU","LS","PI","PS","SR","ST","VL","VN"}
 
 # --- Parsing and Calculation Functions ---
 def split_part_number(part_number):
@@ -343,6 +343,8 @@ def rod_bushing_calc(bore, rod_style, options):
         if rod_style in ('6', '7', '8'):
             bushing_number = '95'
     rod_bushing = bushing_prefix + bushing_number  #combine bushing prefix and bushing number to get rod bushing p/n
+    if options in metallic_scraper_codes:
+        rod_bushing += '-WS'
     if options in double_rod_codes:  #if double rod, quantity of 2
         rod_bushing += ' ' + '(2)'
     return rod_bushing
@@ -432,7 +434,7 @@ def tie_rod_calc(bore, options, stroke, mounting, fractional_stroke, rod_style,x
         elif mounting in ("SN", "SE", "SF"):
             tie_rod_adder = 2.700
         elif mounting == 'T8':
-            tie_rod_adder = -.740 if rod_style in ('1','2','3') else -1.115
+            tie_rod_adder = -.625 if rod_style in ('1','2','3') else -1.1
             tie_rod_adder +=float(xi_num)
     elif bore == '25':
         tie_rod_prefix = 'FCQN25-7X'
@@ -452,7 +454,7 @@ def tie_rod_calc(bore, options, stroke, mounting, fractional_stroke, rod_style,x
         elif mounting in ("SN", "SE", "SF"):
             tie_rod_adder = 2.825
         elif mounting == 'T8':
-            tie_rod_adder = -0.740 if rod_style in ('1','2','3') else -1.115
+            tie_rod_adder = -0.625 if rod_style in ('1','2','3') else -1.1
             tie_rod_adder +=float(xi_num)
     elif bore in ('32', '40'):
         tie_rod_prefix = 'FCQN32-7X'
@@ -539,9 +541,9 @@ def tie_rod_calc(bore, options, stroke, mounting, fractional_stroke, rod_style,x
             tie_rod_adder +=float(xi_num)
     if options in double_rod_codes:
         tie_rod_adder += 0.5
-    if options in (bumper_front_codes or options in bumper_rear_codes) and options not in bumper_both_codes:
+    if options in (bumper_front_codes or options in bumper_rear_codes) and options not in bumper_both_codes and mounting != 'T8':
         tie_rod_adder += .063
-    elif options in bumper_both_codes:
+    elif options in bumper_both_codes and mounting != 'T8':
         tie_rod_adder += .125
     if mounting in 'S1':
         quantity = 2
@@ -730,31 +732,31 @@ def rod_wiper_calc(bore, rod_style, options):
             rod_wiper = 'SG-3435-5/6-BN' if rod_style in ('1','2','3') else 'SG-3435-5/6-BN'
             if options in viton_codes:
                 rod_wiper = rod_wiper[:-2] + "V"
-                return rod_wiper
-        rod_wiper = '940-3' if rod_style in ('1','2','3') else '940-9'
-        if options in viton_codes:
-            rod_wiper += 'V'
+        else:
+            rod_wiper = '940-3' if rod_style in ('1','2','3') else '940-9'
+            if options in viton_codes:
+                rod_wiper += 'V'
     elif bore in ('32','40','50'):
         if options in metallic_scraper_codes:
             rod_wiper = 'SG-3435-1-BN' if rod_style in ('1','2','3') else 'SG-3436-1-3/8-BN'
             if options in viton_codes:
                 rod_wiper = rod_wiper[:-2] + "V"
-                return rod_wiper
-        rod_wiper = '940-9' if rod_style in ('1','2','3') else '940-15'
-        if options in viton_codes:
-            rod_wiper += 'V'
+        else:
+            rod_wiper = '940-9' if rod_style in ('1','2','3') else '940-15'
+            if options in viton_codes:
+                rod_wiper += 'V'
     elif bore in ('60','80'):
         if options in metallic_scraper_codes:
             rod_wiper = 'SG-3436-1-3/8-BN' if rod_style in ('1','2','3') else 'SG-3435-1-3/4-BN'
             if options in viton_codes:
                 rod_wiper = rod_wiper[:-2] + "V"
-                return rod_wiper
-        rod_wiper = '940-15' if rod_style in ('1','2','3') else 'D-1750U2145'
-        if options in viton_codes:
-            if rod_style in ('1','2','3'):
-                rod_wiper += 'V'
-            else:
-                rod_wiper = 'D-1750VT90'
+        else:
+            rod_wiper = '940-15' if rod_style in ('1','2','3') else 'D-1750U2145'
+            if options in viton_codes:
+                if rod_style in ('1','2','3'):
+                    rod_wiper += 'V'
+                else:
+                    rod_wiper = 'D-1750VT90'
     if options in double_rod_codes:
         rod_wiper += ' ' + '(2)'        #if double rod quantity 2
     return rod_wiper
