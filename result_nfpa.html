@@ -128,6 +128,16 @@
             {% if pivot_mount %}<p><strong>Pivot Mount:</strong> {{ pivot_mount }}</p>{% endif %}
             {% if pivot_pin %}<p><strong>Pivot Pin:</strong> {{ pivot_pin }}</p>{% endif %}
             {% if pivot_ring %}<p><strong>Pivot Lock Ring:</strong> {{ pivot_ring }}</p>{% endif %}
+            {% if male_rod %}<p><strong>Rod Stud:</strong> {{ male_rod }}</p>{% endif %}
+            {% if angle_mount %}<p><strong>Angle Mount:</strong> {{ angle_mount }}</p>{% endif %}
+            {% if angle_mount_2 %}<p><strong>Angle Mount:</strong> {{ angle_mount_2 }}</p>{% endif %}
+            {% if trunnion_pin %}<p><strong>Trunnion Pin:</strong> {{ trunnion_pin }}</p>{% endif %}
+            {% if trunnion_screw %}<p><strong>Trunnion Screw:</strong> {{ trunnion_screw }}</p>{% endif %}
+            {% if mid_trunnion %}<p><strong>Mid-Trunnion:</strong> {{ mid_trunnion }}</p>{% endif %}
+            {% if flange %}<p><strong>Flange:</strong> {{ flange }}</p>{% endif %}
+            {% if retainer %}<p><strong>Retainer:</strong> {{ retainer }}</p>{% endif %}
+            {% if spacer_plate %}<p><strong>Spacer Plate:</strong> {{ spacer_plate }}</p>{% endif %}
+            {% if retainer_screw %}<p><strong>Retainer / Plate Screw:</strong> {{ retainer_screw }}</p>{% endif %}
 
             <a href="/" class="back-button">Analyze Another Part</a>
         </div>
@@ -161,11 +171,22 @@
 {{ rod_spud }}{% endif %}{% if rear_spud %}
 {{ rear_spud }}{% endif %}{% if cushioning_spud %}
 {{ cushioning_spud }}{% endif %}{% if cushioning_spud_2 %}
-{{ cushioning_spud_2 }}{% endif %}{% if pivot_bushing %}
+{{ cushioning_spud_2 }}{% endif %}{% if cushioning_seal %}
+{{ cushioning_seal }}{% endif %}{% if pivot_bushing %}
 {{ pivot_bushing}}{% endif %}{% if pivot_mount %}
 {{ pivot_mount}}{% endif %}{% if pivot_pin %}
 {{ pivot_pin}}{% endif %}{% if pivot_ring %}
-{{ pivot_ring }}{% endif %}
+{{ pivot_ring }}{% endif %}{% if male_rod %}
+{{ male_rod }}{% endif %}{% if angle_mount %}
+{{ angle_mount }}{% endif %}{% if angle_mount_2 %}
+{{ angle_mount_2 }}{% endif %}{% if trunnion_pin %}
+{{ trunnion_pin }}{% endif %}{% if trunnion_screw %}
+{{ trunnion_screw }}{% endif %}{% if mid_trunnion %}
+{{ mid_trunnion }}{% endif %}{% if flange %}
+{{ flange }}{% endif %}{% if retainer %}
+{{ retainer }}{% endif %}{% if spacer_plate %}
+{{ spacer_plate }}{% endif %}{% if retainer_screw %}
+{{ retainer_screw }}{% endif %}
 
             </textarea>
             <button class="copy-button" onclick="copyBOM()">Copy to Clipboard</button>
