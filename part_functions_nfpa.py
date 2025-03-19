@@ -377,10 +377,6 @@ def tube_calc(bore, options, stroke, fractional_stroke):
     elif bore == '80':
         cylinder_prefix = 'HAT837X'
         cylinder_length = 1.750
-    if options == 'BB':
-        cylinder_length += 0.125
-    elif options in ('BR', 'BF'):
-        cylinder_length += 0.063
     if (options in bumper_front_codes or options in bumper_rear_codes) and options not in bumper_both_codes:
         cylinder_length += .063                 #add length for bumpers in rear, front, or both
     elif options in bumper_both_codes:
@@ -798,14 +794,21 @@ def rod_bearing_calc(bore, rod_style, options):
     return rod_bearing
 
 
-def retaining_ring_calc(bore, options):
+def retaining_ring_calc(bore,options,rod_style):
     retaining_ring = ''           #simple retaining ring initializing and mapping
     if bore in ('15','20','25'):
-        retaining_ring = 'N5008-131' if options not in stainless_fastener_codes else 'N5008-131SS'
+        if rod_style in ('1', '2', '3'):
+            retaining_ring = 'N5008-131' if options not in stainless_fastener_codes else 'N5008-131SS'
+        else:
+            retaining_ring = 'N5008-175' if options not in stainless_fastener_codes else 'N5008-175SS'
     elif bore in ('32','40','50'):
-        retaining_ring = 'N5008-175' if options not in stainless_fastener_codes else 'N5008-175SS'
+        if rod_style in ('1','2','3'):
+            retaining_ring = 'N5008-175' if options not in stainless_fastener_codes else 'N5008-175SS'
+        else:
+            retaining_ring = 'N5008-237PA' if options not in stainless_fastener_codes else 'N5008-237SS'
     elif bore in ('60','80'):
-        retaining_ring = 'N5008-237PA' if options not in stainless_fastener_codes else 'N5008-237SS'
+        if rod_style in ('1', '2', '3'):
+            retaining_ring = 'N5008-237PA' if options not in stainless_fastener_codes else 'N5008-237SS'
     if options in double_rod_codes:
         retaining_ring += ' ' + '(2)'    #if double rod, quantity 2
     return retaining_ring
@@ -1092,7 +1095,7 @@ def generate_bom(parsed_data):
     wearband = wearband_codes[bore]
     rod_bearing = rod_bearing_calc(bore, rod_style, options)
     magnet_number = magnet_chart[bore] + ' ' + '(2)' if magnet == 'E' else None  #calls magnet from dictionary if magnet is found
-    retaining_ring = retaining_ring_calc(bore,options)
+    retaining_ring = retaining_ring_calc(bore,options,rod_style)
     bumper = bumper_calc(bore,options)
     tierod_nut = tierod_nut_calc(bore,options,mounting)
     piston_bolt = piston_bolt_calc(bore,options,rod_style,cushions)
