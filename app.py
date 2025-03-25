@@ -16,25 +16,33 @@ def index():
             template = 'result_roundbody.html'
         # etc. for other series
 
-        parsed_data = pf.split_part_number(part_number)
-        bom = pf.generate_bom(parsed_data)
+        try:
+            parsed_data,part_number_new = pf.split_part_number(part_number)
+            # generate_bom internally calls functions that check these conditions
+            bom = pf.generate_bom(parsed_data)
+        except ValueError as e:
+            error = str(e)
+            return render_template('index.html', error=error)
 
-        # If you want to pass the parsed_data individually:
-        # For Round Body, maybe it's (prefix, size, stroke_code, suffix)
+        # Depending on the series, unpack the parsed_data accordingly
         if series == 'Round Body':
-            prefix, size, stroke_code, suffix = parsed_data
+            prefix,bore,style,stroke,options,extension = parsed_data
             return render_template(template,
                                    part_number=part_number,
+                                   part_number_new=part_number_new,
                                    prefix=prefix,
-                                   size=size,
-                                   stroke_code=stroke_code,
-                                   suffix=suffix,
-                                   bom=bom)
+                                   bore=bore,
+                                   style=style,
+                                   stroke=stroke,
+                                   options=options,
+                                   extension=extension,
+                                   **bom)
         else:
-            # NFPA: maybe it's (bore, mounting, stroke, fractional_stroke, rod_style, ports, cushions, options, magnet, extension)
+            # For NFPA series, for example
             bore, mounting, stroke, fractional_stroke, rod_style, ports, cushions, options, magnet, extension, xi_num = parsed_data
             return render_template(template,
                                    part_number=part_number,
+                                   part_number_new=part_number_new,
                                    bore=bore,
                                    mounting=mounting,
                                    stroke=stroke,
@@ -49,6 +57,7 @@ def index():
                                    **bom)
 
     return render_template('index.html')
+
 
 if __name__ == '__main__':
     app.run(debug=True)
