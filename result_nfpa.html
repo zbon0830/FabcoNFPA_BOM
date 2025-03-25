@@ -1,204 +1,516 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Part Number Analysis</title>
-    <style>
-        body {
-            font-family: Arial, sans-serif;
-            background-color: #f4f4f4;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            min-height: 100vh;
-            margin: 0;
-        }
-        .wrapper {
-            display: flex;
-            gap: 20px;
-            max-width: 1000px;
-        }
-        .container {
-            background: white;
-            padding: 20px 40px;
-            border-radius: 10px;
-            box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.2);
-            width: 50%;
-            text-align: left;
-        }
-        h1, h2 { color: #333; text-align: center; }
-        p { font-size: 16px; margin: 8px 0; color: #555; }
-        strong { color: #222; }
-        .divider { border-bottom: 2px solid #ddd; margin: 15px 0; }
-        .back-button {
-            display: block;
-            text-align: center;
-            background: #007BFF;
-            color: white;
-            padding: 10px;
-            margin-top: 15px;
-            text-decoration: none;
-            border-radius: 5px;
-            font-size: 16px;
-        }
-        .back-button:hover { background: #0056b3; }
-        /* Copy BOM Box */
-        .copy-section {
-            background: white;
-            padding: 20px;
-            border-radius: 10px;
-            box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.2);
-            width: 40%;
-            text-align: center;
-        }
-        .copy-box {
-            width: 90%;
-            height: 550px;
-            padding: 10px;
-            font-size: 16px;
-            border: 1px solid #ccc;
-            border-radius: 5px;
-            background: #f9f9f9;
-            resize: none;
-        }
-        .copy-button {
-            margin-top: 5px;
-            padding: 8px 12px;
-            background: #28a745;
-            color: white;
-            border: none;
-            border-radius: 5px;
-            cursor: pointer;
-        }
-        .copy-button:hover { background: #218838; }
-    </style>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Part Number Analysis</title>
+  <!-- Importing a modern sans-serif font -->
+  <link
+    href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500&display=swap"
+    rel="stylesheet"
+  />
+  <style>
+    * {
+      box-sizing: border-box;
+      transition: all 0.3s ease;
+    }
+    body {
+      margin: 0;
+      font-family: 'Roboto', sans-serif;
+      background-color: #f7f9fc;
+      color: #333;
+      min-height: 100vh;
+      padding: 20px;
+    }
+    .page-container {
+      max-width: 1300px;
+      margin: 0 auto;
+    }
+    .analyze-button-container {
+      text-align: left;
+      margin-bottom: 15px;
+      width: 100%;
+      padding-left: 370px;
+    }
+    /* Top wrapper for Cylinder Description and BOM */
+    .top-wrapper {
+      display: flex;
+      flex-direction: column;
+      gap: 30px;
+      width: 100%;
+    }
+    @media (min-width: 1024px) {
+      .top-wrapper {
+        flex-direction: row;
+      }
+      .container,
+      .copy-section {
+        flex: 1;
+      }
+    }
+    /* Main container styles */
+    .container,
+    .copy-section {
+      background-color: #fff;
+      border-radius: 10px;
+      padding: 30px;
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+      border: 4px solid;
+      border-image-slice: 1;
+      border-image-source: linear-gradient(45deg, #007bff, rgba(0, 123, 255, 0.2));
+      text-align: left;
+      position: relative;
+    }
+    h1, h2 {
+      margin-top: 0;
+      color: #007bff;
+    }
+    h1 {
+      font-size: 1.75rem;
+      margin-bottom: 20px;
+    }
+    h2 {
+      margin: 0;
+      line-height: 1.2;
+      font-size: 1.75rem;
+    }
+    p {
+      line-height: 1.6;
+      margin: 12px 0;
+    }
+    .divider {
+      border-bottom: 2px solid #e0e0e0;
+      margin: 20px 0;
+    }
+    /* Buttons */
+    a.back-button,
+    button.copy-button,
+    button.external-button,
+    button.print-button {
+      display: inline-block;
+      padding: 10px 16px;
+      border-radius: 5px;
+      text-decoration: none;
+      font-weight: 500;
+      cursor: pointer;
+      border: none;
+    }
+    a.back-button {
+      background-color: #007bff;
+      color: #fff;
+    }
+    a.back-button:hover {
+      background-color: #0056b3;
+    }
+    button.copy-button {
+      background-color: #28a745;
+      color: #fff;
+    }
+    button.copy-button:hover {
+      background-color: #218838;
+    }
+    button.external-button {
+      background-color: #0099D9;
+      color: #fff;
+      margin-top: 20px;
+    }
+    button.external-button:hover {
+      background-color: #138496;
+    }
+    button.print-button {
+      background-color: #0099D9;
+      color: #fff;
+    }
+    button.print-button:hover {
+      background-color: #138496;
+    }
+    .header-row {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-bottom: 20px;
+    }
+    .button-group {
+      display: flex;
+      gap: 10px;
+    }
+    .header-row .external-button {
+      margin-top: 0 !important;
+    }
+    .copy-box {
+      width: 95%;
+      height: 650px;
+      font-size: 16px;
+      border: 1px solid #ccc;
+      border-radius: 5px;
+      background-color: #f9f9f9;
+      resize: none;
+      font-family: monospace;
+    }
+    /* PDF drag-and-drop dropzone styles */
+    .pdf-dropzone {
+      border: 2px dashed #007bff;
+      border-radius: 10px;
+      padding: 20px;
+      text-align: center;
+      color: #007bff;
+      font-weight: 500;
+      height: 450px;
+      overflow: auto;
+    }
+    .pdf-dropzone iframe {
+      width: 100%;
+      height: 500px;
+      border: none;
+    }
+    /* New styles for PDF viewers */
+    .pdf-wrapper {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 30px;
+      margin-top: 30px;
+    }
+    .pdf-viewer {
+      flex: 1 1 calc(50% - 15px);
+      background-color: #fff;
+      border-radius: 10px;
+      padding: 30px;
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+      border: 4px solid;
+      border-image-slice: 1;
+      border-image-source: linear-gradient(45deg, #007bff, rgba(0, 123, 255, 0.2));
+      text-align: left;
+    }
+    /* Print styles: each section on its own page */
+    @media print {
+      /* Hide the buttons and PDF viewers */
+      .analyze-button-container, .pdf-wrapper {
+        display: none;
+      }
+      /* Force each child of .top-wrapper to stack vertically */
+      .top-wrapper {
+        display: block !important;
+      }
+      /* Force each section to start on a new page */
+      .container {
+        page-break-after: always;
+        break-after: page;
+      }
+      .copy-section {
+        page-break-after: always;
+        break-after: page;
+      }
+      @page {
+        size: Letter portrait;
+        margin: 0.5in;
+      }
+    }
+  </style>
 </head>
 <body>
-    <div class="wrapper">
-        <!-- Part Breakdown Section (Left) -->
-        <div class="container">
-            <h1>Part Number Breakdown</h1>
-            <p><strong>PART NUMBER:</strong> {{ part_number }}</p>
-            <div class="divider"></div>
-            <p><strong>Bore Size:</strong> {{ bore }}</p>
-            <p><strong>Mounting Style:</strong> {{ mounting }}</p>
-            <p><strong>Stroke:</strong> {{ stroke }}</p>
-            <p><strong>Fractional Stroke:</strong> {{ fractional_stroke }}</p>
-            <p><strong>Rod Style:</strong> {{ rod_style }}</p>
-            <p><strong>Ports:</strong> {{ ports }}</p>
-            <p><strong>Cushions:</strong> {{ cushions }}</p>
-            <p><strong>Option Code:</strong> {{ options }}</p>
-            <p><strong>Magnet:</strong> {{ magnet }}</p>
-            {% if extension %}
-              <p><strong>Extension:</strong> {{ extension }}</p>
-            {% endif %}
-
-
-            <h2>BOM (Bill of Materials)</h2>
-            <div class="divider"></div>
-            <p><strong>Front Head:</strong> {{ front_head }}</p>
-            <p><strong>Rear Cover:</strong> {{ rear_cover }}</p>
-            <p><strong>Piston Rod:</strong> {{ rod }}</p>
-            {% if rod_2 %}<p><strong>Piston Rod 2:</strong> {{ rod_2 }}</p>{% endif %}
-            <p><strong>Piston Head:</strong> {{ piston_head }}</p>
-            <p><strong>Rod Bushing:</strong> {{ rod_bushing }}</p>
-            <p><strong>Cylinder Tube:</strong> {{ cylinder_tube }}</p>
-            <p><strong>Tie Rod:</strong> {{ tie_rod }}</p>
-            {% if tie_rod_2 %}<p><strong>Tie Rod 2:</strong> {{ tie_rod_2 }}</p>{% endif %}
-            <p><strong>Tie Rod Nut:</strong> {{ tierod_nut }}</p>
-            <p><strong>Rod Bearing:</strong> {{ rod_bearing }}</p>
-            {% if piston_bolt %}<p><strong>Piston Bolt:</strong> {{ piston_bolt }}</p>{% endif %}
-            <p><strong>Retaining Ring:</strong> {{ retaining_ring }}</p>
-            <p><strong>Rod Seal:</strong> {{ rod_seal }}</p>
-            <p><strong>Piston Seal:</strong> {{ piston_seal }}</p>
-            <p><strong>Bushing Seal:</strong> {{ bushing_seal }}</p>
-            <p><strong>Tube Gasket:</strong> {{ tube_gasket }}</p>
-            <p><strong>Rod Wiper:</strong> {{ rod_wiper }}</p>
-            <p><strong>Wearband:</strong> {{ wearband }}</p>
-            {% if magnet_number %}<p><strong>Magnet:</strong> {{ magnet_number }}</p>{% endif %}
-            {% if bumper %}<p><strong>Bumper:</strong> {{ bumper }}</p>{% endif %}
-            {% if adjustable_cushion %}<p><strong>Needle Assembly:</strong> {{ adjustable_cushion }}</p>{% endif %}
-            {% if needle_seal %}<p><strong>Needle Seal:</strong> {{ needle_seal }}</p>{% endif %}
-            {% if rod_spud %}<p><strong>Cushion Spud:</strong> {{ rod_spud }}</p>{% endif %}
-            {% if rear_spud %}<p><strong>Cushion Spud:</strong> {{ rear_spud }}</p>{% endif %}
-            {% if cushioning_seal %}<p><strong>Cushioning Seal:</strong> {{ cushioning_seal }}</p>{% endif %}
-            {% if cushioning_seal_2 %}<p><strong>Cushioning Seal:</strong> {{ cushioning_seal_2 }}</p>{% endif %}
-            {% if pivot_bushing %}<p><strong>Pivot Bushing:</strong> {{ pivot_bushing }}</p>{% endif %}
-            {% if pivot_mount %}<p><strong>Pivot Mount:</strong> {{ pivot_mount }}</p>{% endif %}
-            {% if pivot_pin %}<p><strong>Pivot Pin:</strong> {{ pivot_pin }}</p>{% endif %}
-            {% if pivot_ring %}<p><strong>Pivot Lock Ring:</strong> {{ pivot_ring }}</p>{% endif %}
-            {% if male_rod %}<p><strong>Rod Stud:</strong> {{ male_rod }}</p>{% endif %}
-            {% if angle_mount %}<p><strong>Angle Mount:</strong> {{ angle_mount }}</p>{% endif %}
-            {% if angle_mount_2 %}<p><strong>Angle Mount:</strong> {{ angle_mount_2 }}</p>{% endif %}
-            {% if trunnion_pin %}<p><strong>Trunnion Pin:</strong> {{ trunnion_pin }}</p>{% endif %}
-            {% if trunnion_screw %}<p><strong>Trunnion Screw:</strong> {{ trunnion_screw }}</p>{% endif %}
-            {% if mid_trunnion %}<p><strong>Mid-Trunnion:</strong> {{ mid_trunnion }}</p>{% endif %}
-            {% if flange %}<p><strong>Flange:</strong> {{ flange }}</p>{% endif %}
-            {% if retainer %}<p><strong>Retainer:</strong> {{ retainer }}</p>{% endif %}
-            {% if spacer_plate %}<p><strong>Spacer Plate:</strong> {{ spacer_plate }}</p>{% endif %}
-            {% if retainer_screw %}<p><strong>Retainer / Plate Screw:</strong> {{ retainer_screw }}</p>{% endif %}
-
-            <a href="/" class="back-button">Analyze Another Part</a>
-        </div>
-        <!-- Copy BOM Section (Right) -->
-        <div class="copy-section">
-            <h2>Copy BOM Parts</h2>
-            <textarea id="bomCopy" class="copy-box" readonly>
-{{ front_head }}
-{{ rear_cover }}
-{{ rod }}{% if rod_2 %}
-{{ rod_2 }}{% endif %}
-{{ piston_head }}
-{{ rod_bushing }}
-{{ cylinder_tube }}
-{{ tie_rod }}{% if tie_rod_2 %}
-{{ tie_rod_2 }}{% endif %}
-{{ tierod_nut }}
-{{ rod_bearing }}{% if piston_bolt %}
-{{ piston_bolt }}{% endif %}
-{{ retaining_ring }}
-{{ rod_seal }}
-{{ piston_seal }}
-{{ bushing_seal }}
-{{ rod_wiper }}
-{{ tube_gasket }}
-{{ wearband }}{% if magnet_number %}
-{{ magnet_number}}{% endif %}{% if bumper %}
-{{ bumper}}{% endif %}{% if adjustable_cushion %}
-{{ adjustable_cushion }}{% endif %}{% if needle_seal %}
-{{ needle_seal }}{% endif %}{% if rod_spud %}
-{{ rod_spud }}{% endif %}{% if rear_spud %}
-{{ rear_spud }}{% endif %}{% if cushioning_spud %}
-{{ cushioning_spud }}{% endif %}{% if cushioning_spud_2 %}
-{{ cushioning_spud_2 }}{% endif %}{% if cushioning_seal %}
-{{ cushioning_seal }}{% endif %}{% if pivot_bushing %}
-{{ pivot_bushing}}{% endif %}{% if pivot_mount %}
-{{ pivot_mount}}{% endif %}{% if pivot_pin %}
-{{ pivot_pin}}{% endif %}{% if pivot_ring %}
-{{ pivot_ring }}{% endif %}{% if male_rod %}
-{{ male_rod }}{% endif %}{% if angle_mount %}
-{{ angle_mount }}{% endif %}{% if angle_mount_2 %}
-{{ angle_mount_2 }}{% endif %}{% if trunnion_pin %}
-{{ trunnion_pin }}{% endif %}{% if trunnion_screw %}
-{{ trunnion_screw }}{% endif %}{% if mid_trunnion %}
-{{ mid_trunnion }}{% endif %}{% if flange %}
-{{ flange }}{% endif %}{% if retainer %}
-{{ retainer }}{% endif %}{% if spacer_plate %}
-{{ spacer_plate }}{% endif %}{% if retainer_screw %}
-{{ retainer_screw }}{% endif %}
-
-            </textarea>
-            <button class="copy-button" onclick="copyBOM()">Copy to Clipboard</button>
-        </div>
+  <div class="page-container">
+    <!-- Button Container -->
+    <div class="analyze-button-container">
+      <button class="external-button" onclick="copyAndOpen()">Copy / Open Configurator</button>
+      <a href="/" class="back-button">Analyze Another Part</a>
+      <button class="print-button" onclick="printAll()">Print All</button>
     </div>
-    <script>
-        function copyBOM() {
-            var copyText = document.getElementById("bomCopy");
-            copyText.select();
-            document.execCommand("copy");
-            alert("BOM copied to clipboard!");
+
+    <!-- Top row: Cylinder Description and BOM -->
+    <div class="top-wrapper">
+      <!-- Left Container: Cylinder Description -->
+      <div class="container">
+        <!-- Header row for Part Number + Catalog button -->
+        <div class="header-row">
+          <h1 style="margin: 0;">{{ part_number_new }}</h1>
+          <button class="external-button" onclick="goToCatalog()">NFPA Catalog</button>
+        </div>
+        <div class="divider"></div>
+        <p><strong>Bore Size:</strong> ({{ bore }})  {{ bore_descriptor }}</p>
+        <p><strong>Mounting Style:</strong> ({{ mounting }})  {{ mounting_descriptor }}</p>
+        <p><strong>Whole Stroke:</strong> {{ whole_stroke }}</p>
+        <p><strong>Fractional Stroke:</strong> ({{ fractional_stroke }})  {{ fractional_stroke_identifier }}</p>
+        <p><strong>Rod Style:</strong> {{ rod_style_descriptor }}</p>
+        <p><strong>Ports:</strong> ({{ ports }})  {{ ports_descriptor }}</p>
+        <p><strong>Cushions:</strong> ({{ cushions }})  {{ cushion_descriptor }}</p>
+        <p><strong>Option Code:</strong> ({{ option_addition }})  {{ option_descriptor }}</p>
+        <p><strong>Magnet:</strong> {{ magnet_descriptor }}</p>
+        {% if extension %}
+          <p><strong>Extension:</strong> ({{ extension }})  {{ extension_descriptor }}</p>
+        {% endif %}
+        {% if xi_num %}
+          <p><strong>XI Dimension:</strong> {{ xi_num }}</p>
+        {% endif %}
+      </div>
+
+      <!-- Right Container: BOM -->
+      <div class="copy-section">
+        <div class="header-row">
+          <h2>Bill Of Materials</h2>
+          <div class="button-group">
+            <button class="copy-button" onclick="copyBOM()">Copy to Clipboard</button>
+            <button class="print-button" onclick="printBOM()">Print BOM</button>
+          </div>
+        </div>
+        <textarea id="bomCopy" class="copy-box" readonly>
+MODEL NUMBER: {{ part_number_new }}
+
+QTY    {{ "%-20s"|format("Part Number") }}    Description
+
+{% if front_head and front_head.part_number %}{{ front_head.quantity }}    {{ "%-20s"|format(front_head.part_number) }}    {{ front_head.description }}
+{% endif %}{% if rear_cover and rear_cover.part_number %}{{ rear_cover.quantity }}    {{ "%-20s"|format(rear_cover.part_number) }}    {{ rear_cover.description }}
+{% endif %}{% if rod and rod.part_number %}{{ rod.quantity }}    {{ "%-20s"|format(rod.part_number) }}    {{ rod.description }}
+{% endif %}{% if rod_2 and rod_2.part_number %}{{ rod_2.quantity }}    {{ "%-20s"|format(rod_2.part_number) }}    {{ rod_2.description }}
+{% endif %}{% if piston_head and piston_head.part_number %}{{ piston_head.quantity }}    {{ "%-20s"|format(piston_head.part_number) }}    {{ piston_head.description }}
+{% endif %}{% if rod_bushing and rod_bushing.part_number %}{{ rod_bushing.quantity }}    {{ "%-20s"|format(rod_bushing.part_number) }}    {{ rod_bushing.description }}
+{% endif %}{% if cylinder_tube and cylinder_tube.part_number %}{{ cylinder_tube.quantity }}    {{ "%-20s"|format(cylinder_tube.part_number) }}    {{ cylinder_tube.description }}
+{% endif %}{% if tie_rod and tie_rod.part_number %}{{ tie_rod.quantity }}    {{ "%-20s"|format(tie_rod.part_number) }}    {{ tie_rod.description }}
+{% endif %}{% if tie_rod_2 and tie_rod_2.part_number %}{{ tie_rod_2.quantity }}    {{ "%-20s"|format(tie_rod_2.part_number) }}    {{ tie_rod_2.description }}
+{% endif %}{% if tierod_nut and tierod_nut.part_number %}{{ tierod_nut.quantity }}    {{ "%-20s"|format(tierod_nut.part_number) }}    {{ tierod_nut.description }}
+{% endif %}{% if rod_bearing and rod_bearing.part_number %}{{ rod_bearing.quantity }}    {{ "%-20s"|format(rod_bearing.part_number) }}    {{ rod_bearing.description }}
+{% endif %}{% if piston_bolt and piston_bolt.part_number %}{{ piston_bolt.quantity }}    {{ "%-20s"|format(piston_bolt.part_number) }}    {{ piston_bolt.description }}
+{% endif %}{% if retaining_ring and retaining_ring.part_number %}{{ retaining_ring.quantity }}    {{ "%-20s"|format(retaining_ring.part_number) }}    {{ retaining_ring.description }}
+{% endif %}{% if rod_seal and rod_seal.part_number %}{{ rod_seal.quantity }}    {{ "%-20s"|format(rod_seal.part_number) }}    {{ rod_seal.description }}
+{% endif %}{% if piston_seal and piston_seal.part_number %}{{ piston_seal.quantity }}    {{ "%-20s"|format(piston_seal.part_number) }}    {{ piston_seal.description }}
+{% endif %}{% if bushing_seal and bushing_seal.part_number %}{{ bushing_seal.quantity }}    {{ "%-20s"|format(bushing_seal.part_number) }}    {{ bushing_seal.description }}
+{% endif %}{% if rod_wiper and rod_wiper.part_number %}{{ rod_wiper.quantity }}    {{ "%-20s"|format(rod_wiper.part_number) }}    {{ rod_wiper.description }}
+{% endif %}{% if tube_gasket and tube_gasket.part_number %}{{ tube_gasket.quantity }}    {{ "%-20s"|format(tube_gasket.part_number) }}    {{ tube_gasket.description }}
+{% endif %}{% if wearband and wearband.part_number %}{{ wearband.quantity }}    {{ "%-20s"|format(wearband.part_number) }}    {{ wearband.description }}
+{% endif %}{% if magnet_number and magnet_number.part_number %}{{ magnet_number.quantity }}    {{ "%-20s"|format(magnet_number.part_number) }}    {{ magnet_number.description }}
+{% endif %}{% if bumper and bumper.part_number %}{{ bumper.quantity }}    {{ "%-20s"|format(bumper.part_number) }}    {{ bumper.description }}
+{% endif %}{% if adjustable_cushion and adjustable_cushion.part_number %}{{ adjustable_cushion.quantity }}    {{ "%-20s"|format(adjustable_cushion.part_number) }}    {{ adjustable_cushion.description }}
+{% endif %}{% if needle_seal and needle_seal.part_number %}{{ needle_seal.quantity }}    {{ "%-20s"|format(needle_seal.part_number) }}    {{ needle_seal.description }}
+{% endif %}{% if rod_spud and rod_spud.part_number %}{{ rod_spud.quantity }}    {{ "%-20s"|format(rod_spud.part_number) }}    {{ rod_spud.description }}
+{% endif %}{% if rear_spud and rear_spud.part_number %}{{ rear_spud.quantity }}    {{ "%-20s"|format(rear_spud.part_number) }}    {{ rear_spud.description }}
+{% endif %}{% if cushioning_seal and cushioning_seal.part_number %}{{ cushioning_seal.quantity }}    {{ "%-20s"|format(cushioning_seal.part_number) }}    {{ cushioning_seal.description }}
+{% endif %}{% if cushioning_seal_2 and cushioning_seal_2.part_number %}{{ cushioning_seal_2.quantity }}    {{ "%-20s"|format(cushioning_seal_2.part_number) }}    {{ cushioning_seal_2.description }}
+{% endif %}{% if pivot_bushing and pivot_bushing.part_number %}{{ pivot_bushing.quantity }}    {{ "%-20s"|format(pivot_bushing.part_number) }}    {{ pivot_bushing.description }}
+{% endif %}{% if pivot_mount and pivot_mount.part_number %}{{ pivot_mount.quantity }}    {{ "%-20s"|format(pivot_mount.part_number) }}    {{ pivot_mount.description }}
+{% endif %}{% if pivot_pin and pivot_pin.part_number %}{{ pivot_pin.quantity }}    {{ "%-20s"|format(pivot_pin.part_number) }}    {{ pivot_pin.description }}
+{% endif %}{% if pivot_ring and pivot_ring.part_number %}{{ pivot_ring.quantity }}    {{ "%-20s"|format(pivot_ring.part_number) }}    {{ pivot_ring.description }}
+{% endif %}{% if male_rod and male_rod.part_number %}{{ male_rod.quantity }}    {{ "%-20s"|format(male_rod.part_number) }}    {{ male_rod.description }}
+{% endif %}{% if angle_mount and angle_mount.part_number %}{{ angle_mount.quantity }}    {{ "%-20s"|format(angle_mount.part_number) }}    {{ angle_mount.description }}
+{% endif %}{% if angle_mount_2 and angle_mount_2.part_number %}{{ angle_mount_2.quantity }}    {{ "%-20s"|format(angle_mount_2.part_number) }}    {{ angle_mount_2.description }}
+{% endif %}{% if trunnion_pin and trunnion_pin.part_number %}{{ trunnion_pin.quantity }}    {{ "%-20s"|format(trunnion_pin.part_number) }}    {{ trunnion_pin.description }}
+{% endif %}{% if trunnion_screw and trunnion_screw.part_number %}{{ trunnion_screw.quantity }}    {{ "%-20s"|format(trunnion_screw.part_number) }}    {{ trunnion_screw.description }}
+{% endif %}{% if mid_trunnion and mid_trunnion.part_number %}{{ mid_trunnion.quantity }}    {{ "%-20s"|format(mid_trunnion.part_number) }}    {{ mid_trunnion.description }}
+{% endif %}{% if flange and flange.part_number %}{{ flange.quantity }}    {{ "%-20s"|format(flange.part_number) }}    {{ flange.description }}
+{% endif %}{% if retainer and retainer.part_number %}{{ retainer.quantity }}    {{ "%-20s"|format(retainer.part_number) }}    {{ retainer.description }}
+{% endif %}{% if spacer_plate and spacer_plate.part_number %}{{ spacer_plate.quantity }}    {{ "%-20s"|format(spacer_plate.part_number) }}    {{ spacer_plate.description }}
+{% endif %}{% if retainer_screw and retainer_screw.part_number %}{{ retainer_screw.quantity }}    {{ "%-20s"|format(retainer_screw.part_number) }}    {{ retainer_screw.description }}
+{% endif %}
+        </textarea>
+      </div>
+    </div>
+
+    <!-- PDF Section: full width below the top row -->
+    <div class="pdf-wrapper">
+      <div class="pdf-viewer">
+        <div id="pdfDropzone1" class="pdf-dropzone">
+          <p>Drag and drop a PDF file here (Viewer 1)</p>
+        </div>
+      </div>
+      <div class="pdf-viewer">
+        <div id="pdfDropzone2" class="pdf-dropzone">
+          <p>Drag and drop a PDF file here (Viewer 2)</p>
+        </div>
+      </div>
+      <div class="pdf-viewer">
+        <div id="pdfDropzone3" class="pdf-dropzone">
+          <p>Drag and drop a PDF file here (Viewer 3)</p>
+        </div>
+      </div>
+      <div class="pdf-viewer">
+        <div id="pdfDropzone4" class="pdf-dropzone">
+          <p>Drag and drop a PDF file here (Viewer 4)</p>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    function copyBOM() {
+      var copyText = document.getElementById("bomCopy");
+      copyText.select();
+      document.execCommand("copy");
+      alert("BOM copied to clipboard!");
+    }
+
+    function copyAndOpen() {
+      const partNumber = "{{ part_number }}";
+      const externalURL = "https://portal.fabco-air.com/configure.php?RulesetName=PartDeconstruction";
+      navigator.clipboard.writeText(partNumber).then(() => {
+        window.open(externalURL, '_blank');
+        alert("Part number copied! Please paste it into the Part Deconstruction input field on the opened site.");
+      }).catch(() => {
+        alert("Failed to copy. Please manually copy the part number.");
+      });
+    }
+
+    function printBOM() {
+      const bomContent = document.getElementById("bomCopy").value;
+      const partNumber = "{{ part_number }}";
+      const fullPrintContent = "Cylinder Part Number: " + partNumber + "\n\n" + bomContent;
+      const printWindow = window.open('', '_blank');
+
+      printWindow.document.write(`
+        <html>
+          <head>
+            <title>Print BOM</title>
+            <style>
+              @page {
+                size: Letter portrait;
+                margin: 0;
+              }
+              html, body {
+                margin: 0;
+                padding: 0;
+                width: 80%;
+                height: 75%;
+              }
+              .print-content {
+                margin: 1in;
+                font-family: Courier New, Courier, monospace;
+                font-size: 16pt;
+                line-height: 1.6;
+                white-space: pre;
+              }
+            </style>
+          </head>
+          <body>
+            <div class="print-content">${fullPrintContent}</div>
+          </body>
+        </html>
+      `);
+
+      printWindow.document.close();
+      printWindow.focus();
+      printWindow.print();
+      printWindow.close();
+    }
+
+    function printAll() {
+      document.body.classList.add("print-scale");
+      window.print();
+      document.body.classList.remove("print-scale");
+    }
+
+    function goToCatalog() {
+      // Replace with your real catalog URL:
+      window.open("https://fabco-air.com/pdf/cat_NFPA-6_web.pdf", "_blank");
+    }
+
+    // --- PDF Drag and Drop Functionality for Viewer 1 ---
+    const pdfDropzone1 = document.getElementById("pdfDropzone1");
+    pdfDropzone1.addEventListener("dragover", function(e) {
+      e.preventDefault();
+      pdfDropzone1.classList.add("hover");
+    });
+    pdfDropzone1.addEventListener("dragleave", function(e) {
+      e.preventDefault();
+      pdfDropzone1.classList.remove("hover");
+    });
+    pdfDropzone1.addEventListener("drop", function(e) {
+      e.preventDefault();
+      pdfDropzone1.classList.remove("hover");
+      const files = e.dataTransfer.files;
+      if (files.length) {
+        const file = files[0];
+        if (file.type === "application/pdf") {
+          const fileReader = new FileReader();
+          fileReader.onload = function() {
+            pdfDropzone1.innerHTML = `<iframe src="${fileReader.result}"></iframe>`;
+          }
+          fileReader.readAsDataURL(file);
+        } else {
+          alert("Please drop a valid PDF file.");
         }
-    </script>
+      }
+    });
+
+    // --- PDF Drag and Drop Functionality for Viewer 2 ---
+    const pdfDropzone2 = document.getElementById("pdfDropzone2");
+    pdfDropzone2.addEventListener("dragover", function(e) {
+      e.preventDefault();
+      pdfDropzone2.classList.add("hover");
+    });
+    pdfDropzone2.addEventListener("dragleave", function(e) {
+      e.preventDefault();
+      pdfDropzone2.classList.remove("hover");
+    });
+    pdfDropzone2.addEventListener("drop", function(e) {
+      e.preventDefault();
+      pdfDropzone2.classList.remove("hover");
+      const files = e.dataTransfer.files;
+      if (files.length) {
+        const file = files[0];
+        if (file.type === "application/pdf") {
+          const fileReader = new FileReader();
+          fileReader.onload = function() {
+            pdfDropzone2.innerHTML = `<iframe src="${fileReader.result}"></iframe>`;
+          }
+          fileReader.readAsDataURL(file);
+        } else {
+          alert("Please drop a valid PDF file.");
+        }
+      }
+    });
+
+    // --- PDF Drag and Drop Functionality for Viewer 3 ---
+    const pdfDropzone3 = document.getElementById("pdfDropzone3");
+    pdfDropzone3.addEventListener("dragover", function(e) {
+      e.preventDefault();
+      pdfDropzone3.classList.add("hover");
+    });
+    pdfDropzone3.addEventListener("dragleave", function(e) {
+      e.preventDefault();
+      pdfDropzone3.classList.remove("hover");
+    });
+    pdfDropzone3.addEventListener("drop", function(e) {
+      e.preventDefault();
+      pdfDropzone3.classList.remove("hover");
+      const files = e.dataTransfer.files;
+      if (files.length) {
+        const file = files[0];
+        if (file.type === "application/pdf") {
+          const fileReader = new FileReader();
+          fileReader.onload = function() {
+            pdfDropzone3.innerHTML = `<iframe src="${fileReader.result}"></iframe>`;
+          }
+          fileReader.readAsDataURL(file);
+        } else {
+          alert("Please drop a valid PDF file.");
+        }
+      }
+    });
+
+    // --- PDF Drag and Drop Functionality for Viewer 4 ---
+    const pdfDropzone4 = document.getElementById("pdfDropzone4");
+    pdfDropzone4.addEventListener("dragover", function(e) {
+      e.preventDefault();
+      pdfDropzone4.classList.add("hover");
+    });
+    pdfDropzone4.addEventListener("dragleave", function(e) {
+      e.preventDefault();
+      pdfDropzone4.classList.remove("hover");
+    });
+    pdfDropzone4.addEventListener("drop", function(e) {
+      e.preventDefault();
+      pdfDropzone4.classList.remove("hover");
+      const files = e.dataTransfer.files;
+      if (files.length) {
+        const file = files[0];
+        if (file.type === "application/pdf") {
+          const fileReader = new FileReader();
+          fileReader.onload = function() {
+            pdfDropzone4.innerHTML = `<iframe src="${fileReader.result}"></iframe>`;
+          }
+          fileReader.readAsDataURL(file);
+        } else {
+          alert("Please drop a valid PDF file.");
+        }
+      }
+    });
+  </script>
 </body>
 </html>
