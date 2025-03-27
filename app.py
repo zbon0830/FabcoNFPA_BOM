@@ -1,5 +1,7 @@
 from flask import Flask, render_template, request
 
+from part_functions_fcqn import bore_code, mounting_descriptor
+
 app = Flask(__name__)
 
 @app.route('/', methods=['GET', 'POST'])
@@ -37,6 +39,18 @@ def index():
                                    options=options,
                                    extension=extension,
                                    **bom)
+        elif series == 'FCQN':
+            rod_type, bore, mounting, stroke, fractional_stroke, thread_type, male_rod, viton, extension = parsed_data
+            return render_template(template,
+                                   part_number=part_number,
+                                   rod_type=rod_type,
+                                   bore=bore,
+                                   mounting=mounting,
+                                   stroke=stroke,
+                                   fractional_stroke=fractional_stroke,
+                                   thread_type=thread_type,
+                                   male_rod=male_rod,
+                                   viton=viton, extension=extension, **bom)
         else:
             # For NFPA series, for example
             bore, mounting, stroke, fractional_stroke, rod_style, ports, cushions, options, magnet, extension, xi_num = parsed_data
@@ -60,4 +74,4 @@ def index():
 
 
 if __name__ == '__main__':
-    app.run(debug=True)
+    app.run(host='0.0.0.0', debug=True)

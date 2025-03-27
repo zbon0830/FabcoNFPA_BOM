@@ -105,7 +105,7 @@ metallic_scraper_codes = {
     "AH", "BD", "BE", "BG", "BI", "BJ", "BO", "BU", "BW", "DE", "DG", "DI", "DJ", "DL", "DQ",
     "DW","DZ","EE", "EG","EI","EJ","EK","EO","EW","HB","HD","HF","HH","HJ","HL","HN","HP","HR",
     "HT","HV","HW", "HX","HZ","IB","IF","ID","LA","LC","LE","LF","LG","LH","LI","LJ","LL","LO",
-    "LX","LZ","ME","MG","MI","MP","MS","PH","PI","PR","PW","SW","VB","VE","VF","VG","VI","VK",
+    "LX","LZ","MB","ME","MG","MI","MP","MS","PH","PI","PR","PW","SW","VB","VE","VF","VG","VI","VK",
     "VP","VT","WB","WC","WD","WE","WF","WG","WH","WJ","WK","WL","WM","WN","WO","WP","WQ","WR",
     "WS","WT","WU","WV","WW","WX","WY","WZ"
 }
@@ -371,11 +371,15 @@ def piston_rod_calc(bore, rod_style, cushions, stroke, fractional_stroke, extens
     if options in bumper_front_codes or options in bumper_both_codes:
         rod_adder += 0.063
     rod_length = rod_adder + int(stroke) + fractional_stroke_value[fractional_stroke] + total_extension
+    if rod_style in ('1','2','6','7'):
+        L1_dim = f'{(rod_length - a_dim[bore]):.3f}' if rod_style in ('1','2') else f'{(rod_length - a_dim_oversize[bore]):.3f}'
+    else:
+        L1_dim = None
     rod = f"{rod_prefix}{rod_code[rod_style]}{rod_length:.3f}"
     if extension:
         if extension.startswith(('AD', 'RA', 'AR', 'AC')):
             rod += '-AD' + extension[2:5]
-    return rod  # quantity defaults to 1
+    return rod,L1_dim  # quantity defaults to 1
 
 
 def piston_head_calc(bore, rod_style, options):
@@ -834,7 +838,11 @@ def rod_bearing_calc(bore, rod_style, options):
     if bore in ('15', '20', '25'):
         rod_bearing = '701-00010-024' if rod_style in ('1', '2', '3') else '701-112016-032'
     elif bore in ('32', '40', '50'):
-        rod_bearing = '701-112016-032' if rod_style in ('1', '2', '3') else '701-600022-039'
+        if bore == '32' and options in metallic_scraper_codes:
+            rod_bearing = '701-112016-029' if rod_style in ('1', '2', '3') else '701-600022-039'
+        else:
+            rod_bearing = '701-112016-032' if rod_style in ('1', '2', '3') else '701-600022-039'
+
     elif bore in ('60', '80'):
         rod_bearing = '701-600022-039' if rod_style in ('1', '2', '3') else '701-00028-044'
     if options in double_rod_codes:
@@ -1136,19 +1144,19 @@ def generate_bom(parsed_data):
      ports, cushions, options, magnet, extension, xi_num) = parsed_data
 
     if mounting == 'T6' and (cushions in ('C', 'G', 'E', 'J') or port_position[ports] in ('2', '4')):
-        raise ValueError("Error: Mounting 'T6' is inCompatible with head cushions or port at positions 1 & 2.")
+        raise ValueError("Error: Mounting 'T6' is Incompatible With Cushions or Ports on Head at Positions 2 or 4.")
     if mounting == 'S4' and cushions != 'A' and (cushion_position[cushions] == '3' or port_position[ports] == '3'):
-        raise ValueError("Error: Mounting 'S4' is inCompatible with cushions or ports at position 3.")
+        raise ValueError("Error: Mounting 'S4' is Incompatible with Cushions or Ports at Position 3.")
     if rod_style not in ('3','8') and options in male_rod_codes:
-        raise ValueError("Error: Male rod stud only available on style 3 and 8 rods.")
+        raise ValueError("Error: Male Rod Stud Only Available on Style 3 and 8 Rods.")
     if mounting == 'T8' and not xi_num:
-        raise ValueError("Error: Mid trunnion mount must have XI dimension in part number.")
+        raise ValueError("Error: Mid Trunnion Mount Must Have XI Dimension in Part Number.")
     if extension and extension.startswith(('RA','RC','RR','AR','CR')) and options not in double_rod_codes:
-        raise ValueError("Error: Double-rod option is not present with double-rod extension")
+        raise ValueError("Error: Double-Rod Option is Not Present With Double-Rod Extension")
     if rod_style in ('6','7','8') and bore =='15' and cushions != 'A':
-        raise ValueError('Error: Cushions not available with 1-1/2" bore oversize rod.')
+        raise ValueError('Error: Cushions Not Available With 1-1/2" Bore Oversize Rod.')
     if options not in option_code_dict.option_descriptor:
-        raise ValueError('Error: Option code not defined.')
+        raise ValueError('Contact Engineering to Add Option Code.')
     extension_type = {'AD': 'Rod Thread on Head End Total “A” Dim = ', 'CD': 'Shaft on Head End Total “C” Dim = ',
                       'AC': 'Head End Total “A” & “C” Dims Combined ',
                       'RA': 'Rod Thread on Cap End Double Rod Total "A" Dim = ',
@@ -1175,7 +1183,7 @@ def generate_bom(parsed_data):
     magnet_descriptor = '(N) No Magnet' if magnet != 'E' else '(E) Magnet'
     front_head = front_head_calc(bore, mounting, ports, cushions, rod_style)
     rear_cover = rear_cover_calc(bore, mounting, ports, cushions, options, rod_style)
-    rod = piston_rod_calc(bore, rod_style, cushions, stroke, fractional_stroke, extension, options)
+    rod,L1_dim = piston_rod_calc(bore, rod_style, cushions, stroke, fractional_stroke, extension, options)
     rod_2 = None  # Will be calculated for double rods if applicable.
     piston_head = piston_head_calc(bore, rod_style, options)
     rod_bushing, rod_bushing_qty = rod_bushing_calc(bore, rod_style, options)
@@ -1260,27 +1268,27 @@ def generate_bom(parsed_data):
         if extension:
             if cushions in ('B','C','D','E'):
                 if extension.startswith(('CD','RC')):
-                    rod_2 = piston_rod_calc(bore, rod_style, cushions, stroke, fractional_stroke, None, options)
+                    rod_2,L1_dim_2 = piston_rod_calc(bore, rod_style, cushions, stroke, fractional_stroke, None, options)
                 elif extension.startswith(('CR','AR')):
-                    rod_2 = piston_rod_calc(bore, rod_style, cushions, stroke, fractional_stroke, extension[0:2]+extension[5:8], options)
+                    rod_2,L1_dim_2 = piston_rod_calc(bore, rod_style, cushions, stroke, fractional_stroke, extension[0:2]+extension[5:8], options)
                 elif extension.startswith(('AD','RA')):
-                    rod_2 = piston_rod_calc(bore, rod_style, cushions, stroke, fractional_stroke, None, options)
+                    rod_2,L1_dim_2 = piston_rod_calc(bore, rod_style, cushions, stroke, fractional_stroke, None, options)
                 elif extension.startswith(('AC','RR')):
-                    rod_2 = piston_rod_calc(bore, rod_style, cushions, stroke, fractional_stroke, None, options)
+                    rod_2,L1_dim_2 = piston_rod_calc(bore, rod_style, cushions, stroke, fractional_stroke, None, options)
             else:
                 if extension.startswith(('CD','RC')):
-                    rod_2 = piston_rod_calc(bore, rod_style, 'A', stroke, fractional_stroke, None, options)
+                    rod_2,L1_dim_2 = piston_rod_calc(bore, rod_style, 'A', stroke, fractional_stroke, None, options)
                 elif extension.startswith(('CR','AR')):
-                    rod_2 = piston_rod_calc(bore, rod_style, 'A', stroke, fractional_stroke, extension[0:2]+extension[5:8], options)
+                    rod_2,L1_dim_2 = piston_rod_calc(bore, rod_style, 'A', stroke, fractional_stroke, extension[0:2]+extension[5:8], options)
                 elif extension.startswith(('AD','RA')):
-                    rod_2 = piston_rod_calc(bore, rod_style, 'A', stroke, fractional_stroke, None, options)
+                    rod_2,L1_dim_2 = piston_rod_calc(bore, rod_style, 'A', stroke, fractional_stroke, None, options)
                 elif extension.startswith(('AC','RR')):
-                    rod_2 = piston_rod_calc(bore, rod_style, 'A', stroke, fractional_stroke, None, options)
+                    rod_2,L1_dim_2 = piston_rod_calc(bore, rod_style, 'A', stroke, fractional_stroke, None, options)
         elif not extension:
             if cushions in ('B', 'C', 'D', 'E'):
                 rod += '  (2)'  # if double rod with no extension and cushions on both ends, use same rod
             else:
-                rod_2 = piston_rod_calc(bore, rod_style, 'A', stroke, fractional_stroke, extension, options)
+                rod_2,L1_dim_2 = piston_rod_calc(bore, rod_style, 'A', stroke, fractional_stroke, extension, options)
 
     bom = {
         "bore_descriptor":bore_descriptor[bore], "mounting_descriptor": mounting_descriptor[mounting],
@@ -1291,8 +1299,8 @@ def generate_bom(parsed_data):
         "magnet_descriptor":magnet_descriptor,
         "front_head": {"part_number": front_head, "quantity": 1, "description": 'FRONT HEAD'},
         "rear_cover": {"part_number": rear_cover, "quantity": 1, "description": 'REAR CAP'},
-        "rod": {"part_number": rod, "quantity": 1, "description": 'PISTON ROD'},
-        "rod_2": {"part_number": rod_2, "quantity": 1, "description": 'PISTON ROD'} if rod_2 else None,
+        "rod": {"part_number": rod, "quantity": 1, "description": 'PISTON ROD',"L1_dim":f'(L1={L1_dim})' if rod_style in ('1','2','6','7') else None},
+        "rod_2": {"part_number": rod_2, "quantity": 1, "description": 'PISTON ROD', "L1_dim":f'(L1={L1_dim})'if rod_style in ('1','2','6','7') and rod_2 else None} if rod_2 else None,
         "piston_head": {"part_number": piston_head, "quantity": 1, "description": 'PISTON'},
         "rod_bushing": {"part_number": rod_bushing, "quantity": rod_bushing_qty, "description": 'BUSHING'},
         "cylinder_tube": {"part_number": cylinder_tube, "quantity": 1, "description": 'CYLINDER TUBE'},

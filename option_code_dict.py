@@ -275,6 +275,7 @@ option_addition = {
     "PZ": "PP+DR+V",
     "RW": "CT+SB+SR+ST",
     "SB": "SB",
+    "SD": "",
     "SJ": "BR + ST",
     "SK": "BF+BR+SR",
     "SL": "BF+BR+MR+SR",
