@@ -1,74 +1,151 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Part Number Analyzer</title>
-    <style>
-        body {
-            font-family: Arial, sans-serif;
-            background-color: #f4f4f4;
-            display: flex;
-            flex-direction: column;
-            justify-content: center;
-            align-items: center;
-            height: 100vh;
-            margin: 0;
-        }
-        .container {
-            background: white;
-            padding: 20px;
-            border-radius: 10px;
-            box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.2);
-            text-align: center;
-            max-width: 400px;
-        }
-        h1 {
-            color: #333;
-        }
-        input {
-            width: 80%;
-            padding: 10px;
-            margin: 10px 0;
-            border: 1px solid #ccc;
-            border-radius: 5px;
-            text-transform: uppercase;
-            font-size: 16px;
-        }
-        button {
-            background: #007BFF;
-            color: white;
-            border: none;
-            padding: 10px 20px;
-            font-size: 16px;
-            border-radius: 5px;
-            cursor: pointer;
-        }
-        button:hover {
-            background: #0056b3;
-        }
-        .logo {
-            margin-bottom: 20px;
-        }
-        .error {
-            color: red;
-            margin-top: 10px;
-        }
-    </style>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Part Number Analyzer</title>
+  <!-- Import Roboto Font -->
+  <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500&display=swap" rel="stylesheet" />
+  <style>
+    /* Reset default margins, paddings, and set box-sizing */
+    html, body {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+    /* Style for the entire page with a blue border */
+    body {
+      font-family: 'Roboto', sans-serif;
+      background-color: #f4f4f4;
+      border: 8px solid #0099D9; /* Blue border matching the logo */
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+    }
+    .container {
+      background: white;
+      padding: 20px 30px;
+      border-radius: 10px;
+      box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.2);
+      text-align: center;
+      max-width: 400px;
+      width: 100%;
+    }
+    h1 {
+      color: #333;
+    }
+    label {
+      font-size: 16px;
+      font-weight: bold;
+      display: block;
+      margin-top: 10px;
+    }
+    select, input {
+      width: 100%;
+      padding: 10px;
+      margin: 8px 0;
+      border: 1px solid #ccc;
+      border-radius: 5px;
+      font-size: 16px;
+      text-transform: uppercase;
+    }
+    button {
+      background: #007BFF;
+      color: white;
+      border: none;
+      padding: 10px 20px;
+      font-size: 16px;
+      border-radius: 5px;
+      cursor: pointer;
+      margin-top: 10px;
+      width: 100%;
+    }
+    button:hover {
+      background: #0056b3;
+    }
+    .logo {
+      margin-bottom: 20px;
+    }
+    .error {
+      color: #d8000c;
+      background-color: #ffbaba;
+      border: 1px solid #d8000c;
+      padding: 10px;
+      border-radius: 5px;
+      animation: fadeInBounce 0.6s ease-out;
+      margin-top: 15px;
+    }
+    /* Define a keyframe animation for a fade-in and slight bounce effect */
+    @keyframes fadeInBounce {
+      0% {
+        opacity: 0;
+        transform: translateY(-20px);
+      }
+      60% {
+        opacity: 1;
+        transform: translateY(10px);
+      }
+      80% {
+        transform: translateY(-5px);
+      }
+      100% {
+        transform: translateY(0);
+      }
+    }
+    /* Container for the two buttons */
+    .button-container {
+      display: flex;
+      justify-content: center;
+      gap: 20px;
+      margin-top: 20px;
+    }
+    /* Shared style for the buttons */
+    .config-button, .catalog-button {
+      display: inline-block;
+      background: #0099D9;
+      color: white;
+      padding: 10px 20px;
+      text-decoration: none;
+      border-radius: 5px;
+      font-size: 16px;
+    }
+    .config-button:hover, .catalog-button:hover {
+      background: #007bb5;
+    }
+  </style>
 </head>
 <body>
-    <div class="logo">
-        <img src="static/images/fabco-air-logo.png" alt="Fabco-Air Logo" width="275" height="85">
+  <div class="logo">
+    <img src="static/images/fabco-air-logo.png" alt="Fabco-Air Logo" width="275" height="85">
+  </div>
+  <div class="container">
+    <h1>Enter Part Number</h1>
+    <form method="POST">
+      <!-- Dropdown for Selecting Actuator Series -->
+      <label for="series">Select Actuator Series:</label>
+      <select name="series" id="series" required>
+        <option value="NFPA">NFPA (Troubleshooting)</option>
+        <option value="Round Body">Round Body (WIP)</option>
+        <option value="Pancake">Pancake (NOT STARTED)</option>
+        <option value="FCQN">FCQN (NOT STARTED)</option>
+      </select>
+      <!-- Input for Part Number -->
+      <label for="part_number">Enter Part Number:</label>
+      <input type="text" name="part_number" id="part_number" placeholder="Enter part number" required>
+      <!-- Submit Button -->
+      <button type="submit">Submit</button>
+    </form>
+    <!-- Display Error Message if Needed -->
+    {% if error %}
+      <p class="error">{{ error }}</p>
+    {% endif %}
+    <!-- Button Container for the two side-by-side buttons -->
+    <div class="button-container">
+      <a class="config-button" href="https://portal.fabco-air.com/configure.php" target="_blank" rel="noopener noreferrer">Configurator</a>
+      <a class="catalog-button" href="https://fabco-air.com/pdf/CV9_web.pdf" target="_blank" rel="noopener noreferrer">Master Catalog</a>
     </div>
-    <div class="container">
-        <h1>Enter NFPA Part Number</h1>
-        <form method="POST">
-            <input type="text" name="part_number" placeholder="Enter part number" required>
-            <button type="submit">Submit</button>
-        </form>
-        {% if error %}
-        <p class="error">{{ error }}</p>
-        {% endif %}
-    </div>
+  </div>
 </body>
 </html>
